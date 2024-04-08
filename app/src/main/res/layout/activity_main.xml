@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="328dp"
-        android:layout_height="502dp"
+        android:layout_height="487dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"
         android:orientation="vertical"
@@ -45,7 +45,7 @@
             android:layout_height="28dp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/nombreRegistro"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
@@ -61,27 +61,52 @@
             android:layout_height="23dp" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/claveDosRegistro"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
             android:ems="10"
             android:hint="Contraseña"
-            android:textColorHint="@color/principal"
             android:inputType="textPassword"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:textColorHint="@color/principal" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="23dp" />
 
         <Button
-            android:id="@+id/buttoniniciar"
+            android:id="@+id/buttonregistrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/principaloscuro"
             android:background="@drawable/botones"
-            android:text="Iniciar sesión" />
+            android:text="Iniciar sesión"
+            android:textColor="@color/principaloscuro" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <Button
+            android:id="@+id/googlebutton"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:background="@color/white"
+            android:drawableStart="@mipmap/google30"
+            android:padding="5dp"
+            android:text="Google"
+            android:textColor="@color/principaloscuro" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <Button
+            android:id="@+id/registrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No tienes cuenta? Registrate" />
 
     </LinearLayout>
 

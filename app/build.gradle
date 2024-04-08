@@ -30,8 +30,13 @@ android {
 }
 
 dependencies {
+    // Firebase Authentication
+    implementation libs.firebase.auth.v2200
 
-    implementation libs.firebase.auth
+    // Google Play Services Auth
+    implementation libs.play.services.auth
+
+    // Otras dependencias
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity

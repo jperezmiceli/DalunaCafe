@@ -16,6 +16,12 @@ public class Usuario {
         this.id = id;
         this.ubicacion = ubicacion;
     }
+    public Usuario(String nombre,String numero, String mail){
+        this.nombre = nombre;
+        this.numero = numero;
+        this.mail = mail;
+        this.id = mail;
+    }
 
     public String getNombre() {
         return nombre;

@@ -5,6 +5,131 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controlador.Registro">
+    android:background="#937F84"
+    tools:context=".controlador.InicioSesion">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="201dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dalunga240" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="346dp"
+        android:layout_height="536dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/fondo_redondeado"
+        android:orientation="vertical"
+        android:padding="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="cursive"
+            android:text="Registro"
+            android:textSize="34sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="28dp" />
+
+        <EditText
+            android:id="@+id/nombreRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:ems="10"
+            android:hint="nombre"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/principal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="28dp" />
+
+        <EditText
+            android:id="@+id/movilRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:ems="10"
+            android:hint="movil"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/principal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="28dp" />
+
+        <EditText
+            android:id="@+id/mailRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:ems="10"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/principal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <EditText
+            android:id="@+id/claveUnoRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColorHint="@color/principal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <EditText
+            android:id="@+id/claveDosRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:ems="10"
+            android:hint="repite contraseña"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColorHint="@color/principal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <Button
+            android:id="@+id/buttonregistrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botones"
+            android:text="Registrarse"
+            android:textColor="@color/principaloscuro" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
