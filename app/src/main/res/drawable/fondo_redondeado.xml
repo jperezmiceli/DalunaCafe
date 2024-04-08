@@ -10,7 +10,7 @@
     <!-- Fondo por defecto -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="20dp" /> <!-- Radio para bordes redondeados -->
+            <corners android:radius="15dp" /> <!-- Radio para bordes redondeados -->
             <solid android:color="@color/principalClarito" /> <!-- Color de fondo por defecto -->
         </shape>
     </item>
