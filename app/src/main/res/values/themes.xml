@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme -->
+    <style name="Base.Theme.Daluna" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your light theme here -->
+        <item name="colorPrimary">@color/principal</item>
+    </style>
+
+    <!-- Theme for the application -->
+    <style name="Theme.Daluna" parent="Base.Theme.Daluna" />
+
+    <!-- Splash screen theme -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your splash theme here -->
+        <item name="android:windowBackground">@color/principal</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/dalunga240</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.Daluna</item>
+    </style>
+</resources>

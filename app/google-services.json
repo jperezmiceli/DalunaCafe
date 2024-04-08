@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "379498704645",
+    "project_id": "daluna-22b7a",
+    "storage_bucket": "daluna-22b7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379498704645:android:8e21a40789b6373e04116c",
+        "android_client_info": {
+          "package_name": "com.example.daluna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt_LCrPb8FRRWD33wcGoRzDVFIVQvSTB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

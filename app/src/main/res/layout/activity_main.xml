@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#937F84"
+
+    tools:context=".controlador.InicioSesion">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="362dp"
+        android:layout_height="418dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/fondo_redondeado"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="28dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Iniciar sesion" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/fondoiniciosesion"
+            android:textColor="@color/black"
+            android:ems="10"
+            android:hint="mail"
+            android:inputType="textEmailAddress"
+            android:padding="8dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="33dp" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="clave"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="18px"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:id="@+id/buttoniniciar"
+                android:layout_width="200px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#3F51B5"
+                android:text="Iniciar" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dalunga240" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
