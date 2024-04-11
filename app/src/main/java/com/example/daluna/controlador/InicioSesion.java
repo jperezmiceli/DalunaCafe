@@ -45,8 +45,6 @@ public class InicioSesion extends AppCompatActivity {
         registrar = findViewById(R.id.registrate);
         mail = findViewById(R.id.nombreRegistro);
         clave = findViewById(R.id.claveDosRegistro);
-        producto = new Producto("pan","1",3.56679,"desayuno");
-        System.out.println(producto.getPuntosProducto());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -57,13 +55,9 @@ public class InicioSesion extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(InicioSesion.this, Registro.class);
 
-
-                // Iniciar la nueva actividad
                 startActivity(intent);
 
-                // Opcional: Cerrar la actividad actual si ya no es necesaria
                 finish();
-
 
             }
         });
@@ -112,7 +106,7 @@ public class InicioSesion extends AppCompatActivity {
     }
     private void showHome(String correo) {
         // Crear un Intent para iniciar la nueva actividad
-        Intent intent = new Intent(this, Principal.class);
+        Intent intent = new Intent(this, Productos.class);
 
         // Agregar el correo electrónico y el proveedor como extras en el intent
         intent.putExtra("correo", correo);

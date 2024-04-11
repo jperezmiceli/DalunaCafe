@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Daluna"
         tools:targetApi="31">
         <activity
+            android:name=".controlador.BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controlador.Productos"
+            android:exported="false" />
+        <activity
             android:name=".controlador.Registro"
             android:exported="false" />
         <activity
@@ -25,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controlador.Principal" />
+        <activity android:name=".controlador.Home" />
     </application>
 
 </manifest>

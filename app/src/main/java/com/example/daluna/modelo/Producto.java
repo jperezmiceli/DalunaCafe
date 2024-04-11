@@ -1,57 +1,72 @@
 package com.example.daluna.modelo;
 
 public class Producto {
-    private String nombreProducto;
-    private String idProducto;
-    private double precioProducto;
-    private int puntosProducto;
-    private String categoriaProducto;
+    private String categoria;
+    private String descripcion;
+    private boolean estado;
+    private String imagen;
+    private String nombre;
 
-    public Producto(String nombreProducto, String idProducto, double precioProducto, String categoriaProducto) {
-        this.nombreProducto = nombreProducto;
-        this.idProducto = idProducto;
-        this.precioProducto = precioProducto;
-        this.categoriaProducto = categoriaProducto;
-        this.puntosProducto = (int) Math.floor(precioProducto * 10);
+    private double precio;
+
+    public Producto() {
+        // Constructor vacío requerido por Firebase
     }
 
-    public String getNombreProducto() {
-        return nombreProducto;
+    public Producto(String categoria, String descripcion, boolean estado, String imagen, String nombre,  double precio) {
+        this.categoria = categoria;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.imagen = imagen;
+        this.nombre = nombre;
+        this.precio = precio;
     }
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public String getIdProducto() {
-        return idProducto;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public double getPrecioProducto() {
-        return precioProducto;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
-    public void setPrecioProducto(int precioProducto) {
-        this.precioProducto = precioProducto;
+    public String getImagen() {
+        return imagen;
     }
 
-    public int getPuntosProducto() {
-        return puntosProducto;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public void setPuntosProducto(int puntosProducto) {
-        this.puntosProducto = puntosProducto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getCategoriaProducto() {
-        return categoriaProducto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setCategoriaProducto(String categoriaProducto) {
-        this.categoriaProducto = categoriaProducto;
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }

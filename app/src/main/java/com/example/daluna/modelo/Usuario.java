@@ -7,6 +7,9 @@ public class Usuario {
     private String mail;
     private String id;
     private String ubicacion;
+    public Usuario(){
+
+    }
 
     public Usuario(String nombre, String apellidos, String numero, String mail, String id, String ubicacion) {
         this.nombre = nombre;

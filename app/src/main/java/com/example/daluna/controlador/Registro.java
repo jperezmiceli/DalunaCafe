@@ -68,6 +68,8 @@ public class Registro extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         Usuario usuario = new Usuario(nombre.getText().toString(), numero.getText().toString(),mail.getText().toString());
+                                        FirebaseManager firebaseManager = new FirebaseManager();
+                                        firebaseManager.writeNewUser(usuario);
                                         Log.e(TAG, "Usuario registrado");
                                         showHome(email);
                                         // El usuario se creó exitosamente
@@ -103,7 +105,7 @@ public class Registro extends AppCompatActivity {
 
     private void showHome(String correo) {
         // Crear un Intent para iniciar la nueva actividad
-        Intent intent = new Intent(this, Principal.class);
+        Intent intent = new Intent(this, Home.class);
 
         // Agregar el correo electrónico y el proveedor como extras en el intent
         intent.putExtra("correo", correo);
