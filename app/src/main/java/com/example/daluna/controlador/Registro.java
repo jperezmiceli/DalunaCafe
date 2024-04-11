@@ -20,11 +20,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.daluna.R;
-import com.example.daluna.modelo.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class Registro extends AppCompatActivity {
     private Button registrar;
@@ -33,6 +31,7 @@ public class Registro extends AppCompatActivity {
     private EditText numero;
     private EditText claveUno;
     private EditText claveDos;
+    private FirebaseAuthManager authManager;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,9 +45,8 @@ public class Registro extends AppCompatActivity {
         claveDos = findViewById(R.id.claveDosRegistro);
         nombre = findViewById(R.id.nombreRegistro);
         numero = findViewById(R.id.movilRegistro);
-
         registrar = findViewById(R.id.buttonregistrar);
-
+        authManager = new FirebaseAuthManager();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -62,27 +60,20 @@ public class Registro extends AppCompatActivity {
                 String password = claveDos.getText().toString();
 
                 if (!email.isEmpty() && !password.isEmpty() && claveUno.getText().toString().equals(claveDos.getText().toString())) {
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    authManager.signUp(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Usuario usuario = new Usuario(nombre.getText().toString(), numero.getText().toString(),mail.getText().toString());
-                                        FirebaseManager firebaseManager = new FirebaseManager();
-                                        firebaseManager.writeNewUser(usuario);
-                                        Log.e(TAG, "Usuario registrado");
+                                        Log.d(TAG, "Usuario registrado");
                                         showHome(email);
-                                        // El usuario se creó exitosamente
-                                        // Aquí puedes manejar el éxito, por ejemplo, iniciar sesión automáticamente o mostrar un mensaje de éxito
                                     } else {
-                                        // Hubo un error al crear el usuario
-                                        // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje de error al usuario
                                         Log.e(TAG, "Error al crear usuario: " + task.getException().getMessage());
-                                        // Mostrar un diálogo de alerta con el mensaje de error
                                         showErrorDialog(task.getException().getMessage());
                                     }
                                 }
                             });
+
                 } else {
                     Log.e(TAG, "error");
                 }
@@ -104,16 +95,9 @@ public class Registro extends AppCompatActivity {
     }
 
     private void showHome(String correo) {
-        // Crear un Intent para iniciar la nueva actividad
         Intent intent = new Intent(this, Home.class);
-
-        // Agregar el correo electrónico y el proveedor como extras en el intent
         intent.putExtra("correo", correo);
-
-        // Iniciar la nueva actividad
         startActivity(intent);
-
-        // Opcional: Cerrar la actividad actual si ya no es necesaria
         finish();
     }
 }

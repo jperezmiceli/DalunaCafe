@@ -1,31 +1,43 @@
 package com.example.daluna.controlador;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
-import com.example.daluna.modelo.Producto;
-import com.example.daluna.modelo.Usuario;
-import com.google.firebase.database.DataSnapshot;
+import com.example.daluna.modelo.Usuarios;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FirebaseManager extends AppCompatActivity {
+public class FirebaseManager {
+    private static final String TAG = "FirebaseManager";
     private DatabaseReference mDatabase;
-    public FirebaseManager(){
+
+    public FirebaseManager() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void writeNewUser(Usuario usuario) {
-        // Crear un nuevo objeto Usuario con los datos proporcionados
-
-
+    public void writeNewUser(String userId, Usuarios usuario) {
         // Guardar el usuario en la base de datos Firebase
-        mDatabase.child("usuarios").child("hsuwsh99").setValue(usuario);
+        mDatabase.child("usuarios").child(userId).setValue(usuario);
     }
 
+    public void readUser(String userId) {
+        // Leer un usuario de la base de datos Firebase
+        mDatabase.child("usuarios").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Este método se llama una vez con el valor inicial y nuevamente
+                // cada vez que se actualizan los datos en esta ubicación.
+                Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
+                Log.d(TAG, "Usuario leído: " + usuario);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Error al leer el valor
+                Log.w(TAG, "Error al leer el valor.", error.toException());
+            }
+        });
+    }
 }

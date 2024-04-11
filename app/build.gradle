@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     id 'com.google.gms.google-services'
+
 }
 
 android {
@@ -32,9 +33,10 @@ android {
 dependencies {
     // Firebase Authentication
     implementation libs.firebase.auth.v2200
-
+    implementation platform(libs.firebase.bom)
     // Google Play Services Auth
     implementation libs.play.services.auth
+
 
     // Otras dependencias
     implementation libs.glide

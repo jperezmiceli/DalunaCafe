@@ -1,29 +1,24 @@
 package com.example.daluna.modelo;
 
-public class Usuario {
+public class Usuarios {
     private String nombre;
     private String apellidos;
     private String numero;
-    private String mail;
-    private String id;
+    private String correo;
+    private boolean estado;
+    private int puntos;
     private String ubicacion;
-    public Usuario(){
 
-    }
+    public Usuarios() {}
 
-    public Usuario(String nombre, String apellidos, String numero, String mail, String id, String ubicacion) {
+    public Usuarios(String nombre, String apellidos, String numero, String correo, boolean estado, int puntos, String ubicacion) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.numero = numero;
-        this.mail = mail;
-        this.id = id;
+        this.correo = correo;
+        this.estado = estado;
+        this.puntos = puntos;
         this.ubicacion = ubicacion;
-    }
-    public Usuario(String nombre,String numero, String mail){
-        this.nombre = nombre;
-        this.numero = numero;
-        this.mail = mail;
-        this.id = mail;
     }
 
     public String getNombre() {
@@ -50,20 +45,28 @@ public class Usuario {
         this.numero = numero;
     }
 
-    public String getMail() {
-        return mail;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getId() {
-        return id;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     public String getUbicacion() {
@@ -74,3 +77,4 @@ public class Usuario {
         this.ubicacion = ubicacion;
     }
 }
+

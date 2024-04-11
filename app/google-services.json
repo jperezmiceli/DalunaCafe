@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "379498704645",
+    "firebase_url": "https://daluna-22b7a-default-rtdb.europe-west3.firebasedatabase.app",
     "project_id": "daluna-22b7a",
     "storage_bucket": "daluna-22b7a.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.example.daluna"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "379498704645-ldm697fohjlft04ll7bsp8qsgrn7oj43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAt_LCrPb8FRRWD33wcGoRzDVFIVQvSTB0"
@@ -20,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379498704645-ldm697fohjlft04ll7bsp8qsgrn7oj43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
