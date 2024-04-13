@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.daluna.R;
 import com.example.daluna.modelo.Producto;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
 public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder> {
     private Context context;
     private List<Producto> listaProductos;
+
+
 
     public ProductoAdaptador(Context context, List<Producto> listaProductos) {
         this.context = context;

@@ -21,7 +21,7 @@
 
     import com.example.daluna.R;
     import com.example.daluna.modelo.Producto;
-    import com.example.daluna.modelo.Usuarios;
+    import com.example.daluna.modelo.Usuario;
     import com.google.android.gms.tasks.OnCompleteListener;
     import com.google.android.gms.tasks.Task;
     import com.google.firebase.FirebaseApp;
@@ -33,16 +33,15 @@
         private Button enviar;
         private EditText mail;
         private EditText clave;
-        private FirebaseAuthManager authManager;
 
+        FirebaseAuth mAuth;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            // Inicializar el FirebaseAuthManager
-            authManager = new FirebaseAuthManager();
 
+            mAuth = FirebaseAuth.getInstance();
             enviar = findViewById(R.id.buttonregistrar);
             registrar = findViewById(R.id.registrate);
             mail = findViewById(R.id.nombreRegistro);
@@ -65,7 +64,7 @@
 
                     if (!email.isEmpty() && !password.isEmpty()) {
                         // Iniciar sesión utilizando el FirebaseAuthManager
-                        authManager.signIn(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -98,7 +97,7 @@
         }
 
         private void showHome(String correo) {
-            Intent intent = new Intent(this, Home.class);
+            Intent intent = new Intent(this, Productos.class);
             intent.putExtra("correo", correo);
             startActivity(intent);
             finish();

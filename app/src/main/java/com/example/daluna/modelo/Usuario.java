@@ -1,23 +1,23 @@
 package com.example.daluna.modelo;
 
-public class Usuarios {
+public class Usuario {
     private String nombre;
-    private String apellidos;
+    private String apellido;
     private String numero;
     private String correo;
     private boolean estado;
     private int puntos;
     private String ubicacion;
 
-    public Usuarios() {}
+    public Usuario() {}
 
-    public Usuarios(String nombre, String apellidos, String numero, String correo, boolean estado, int puntos, String ubicacion) {
+    public Usuario(String nombre, String apellido, String numero, String correo, String ubicacion) {
         this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.apellido = apellido;
         this.numero = numero;
         this.correo = correo;
-        this.estado = estado;
-        this.puntos = puntos;
+        this.estado = true;
+        this.puntos = 0;
         this.ubicacion = ubicacion;
     }
 
@@ -30,11 +30,11 @@ public class Usuarios {
     }
 
     public String getApellidos() {
-        return apellidos;
+        return apellido;
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        this.apellido = apellidos;
     }
 
     public String getNumero() {
@@ -77,4 +77,3 @@ public class Usuarios {
         this.ubicacion = ubicacion;
     }
 }
-
