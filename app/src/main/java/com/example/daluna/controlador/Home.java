@@ -20,10 +20,11 @@ public class Home extends AppCompatActivity {
 
         // Obtener el correo electrónico de la intención
         String correo = getIntent().getStringExtra("correo");
+        String id = getIntent().getStringExtra("id");
 
 
         // Concatenar el correo electrónico y el ID de usuario (si es necesario) para mostrarlos en el TextView
-        String textoCorreo = correo + " - ID: " ;
+        String textoCorreo = correo + " - ID: " + id;
 
         // Configurar el texto en un TextView
         TextView editTextCorreo = findViewById(R.id.editTetxtCorreo);

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/recuperacion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#937F84"
@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="224dp"
-        android:layout_height="188dp"
+        android:layout_width="222dp"
+        android:layout_height="228dp"
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,9 +19,9 @@
         app:srcCompat="@drawable/dalunga240" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="323dp"
-        android:layout_height="448dp"
+        android:id="@+id/linearrec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"
         android:orientation="vertical"
@@ -33,12 +33,12 @@
         app:layout_constraintVertical_bias="0.305">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvrecuperarcontra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="cursive"
-            android:text="Iniciar sesión"
+            android:text="Recuperar contraseña"
             android:textSize="34sp" />
 
         <Space
@@ -46,7 +46,7 @@
             android:layout_height="28dp" />
 
         <EditText
-            android:id="@+id/nombreRegistro"
+            android:id="@+id/correorecu"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
@@ -61,53 +61,17 @@
             android:layout_width="match_parent"
             android:layout_height="23dp" />
 
-        <EditText
-            android:id="@+id/claveDosRegistro"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@drawable/fondoiniciosesion"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:padding="8dp"
-            android:textColorHint="@color/principal" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="23dp" />
-
         <Button
-            android:id="@+id/buttonregistrar"
+            android:id="@+id/buttonrecuperar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/botones"
-            android:text="Iniciar sesión"
+            android:text="Enviar"
             android:textColor="@color/principaloscuro" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="23dp" />
-
-        <Button
-            android:id="@+id/googlebutton"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/google30"
-            android:padding="5dp"
-            android:text="Google"
-            android:textColor="@color/principaloscuro" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="23dp" />
-
-        <Button
-            android:id="@+id/registrate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="No tienes cuenta? Registrate" />
 
     </LinearLayout>
 

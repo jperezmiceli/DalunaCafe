@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="190dp"
-        android:layout_height="126dp"
+        android:layout_width="173dp"
+        android:layout_height="130dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -21,13 +21,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="339dp"
-        android:layout_height="584dp"
+        android:layout_width="341dp"
+        android:layout_height="602dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"
         android:orientation="vertical"
         android:padding="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -39,6 +38,7 @@
             android:layout_gravity="center_horizontal"
             android:fontFamily="cursive"
             android:text="Registro"
+            android:textColor="@color/principal"
             android:textSize="34sp" />
 
         <Space

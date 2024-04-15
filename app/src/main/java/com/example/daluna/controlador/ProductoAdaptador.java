@@ -22,18 +22,19 @@ import java.util.List;
 public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder> {
     private Context context;
     private List<Producto> listaProductos;
-
-
+    private LayoutInflater inflater;
+    private DatabaseReference databaseReference;
 
     public ProductoAdaptador(Context context, List<Producto> listaProductos) {
         this.context = context;
         this.listaProductos = listaProductos;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_producto, parent, false);
+        View view = inflater.inflate(R.layout.item_producto, parent, false);
         return new ProductoViewHolder(view);
     }
 
@@ -65,7 +66,11 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         }
 
         public void bind(final Producto producto) {
-            Glide.with(context).load(producto.getImagen()).into(imageViewProducto);
+            // Cargar la imagen desde Google Drive con Glide
+            Glide.with(context)
+                    .load(producto.getImagen())
+                    .into(imageViewProducto);
+
             textViewNombre.setText(producto.getNombre());
             textViewDescripcion.setText(producto.getDescripcion());
             textViewPrecio.setText(context.getString(R.string.price_format, producto.getPrecio()));

@@ -152,6 +152,7 @@ public class Registro extends AppCompatActivity {
             // También puedes redirigir al usuario a otra actividad o realizar otras acciones según sea necesario
             Intent intent = new Intent(this, Home.class);
             intent.putExtra("correo", mail.getText().toString());
+            intent.putExtra("id", userId);
             startActivity(intent);
             finish();
         } else {
