@@ -27,6 +27,7 @@
     import com.google.firebase.FirebaseApp;
     import com.google.firebase.auth.AuthResult;
     import com.google.firebase.auth.FirebaseAuth;
+    import com.google.firebase.storage.FirebaseStorage;
 
     public class InicioSesion extends AppCompatActivity {
         private Button registrar;
@@ -39,7 +40,7 @@
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-
+            FirebaseStorage storage = FirebaseStorage.getInstance();
 
             mAuth = FirebaseAuth.getInstance();
             enviar = findViewById(R.id.buttonregistrar);

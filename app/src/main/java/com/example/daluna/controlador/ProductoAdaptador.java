@@ -66,7 +66,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         }
 
         public void bind(final Producto producto) {
-            // Cargar la imagen desde Google Drive con Glide
+
             Glide.with(context)
                     .load(producto.getImagen())
                     .into(imageViewProducto);

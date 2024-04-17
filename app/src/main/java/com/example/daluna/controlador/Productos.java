@@ -3,7 +3,6 @@ package com.example.daluna.controlador;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +20,8 @@ import java.util.List;
 
 public class Productos extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewcafe;
+    private RecyclerView recyclerViewtes;
     private ProductoAdaptador adaptador;
     private List<Producto> listaProductos;
 
@@ -30,19 +30,19 @@ public class Productos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productos);
 
-        // Configurar EdgeToEdge
-        EdgeToEdge.enable(this);
-
         // Inicializar la lista de productos
         listaProductos = new ArrayList<>();
 
         // Configurar el RecyclerView
-        recyclerView = findViewById(R.id.rvprod);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewcafe = findViewById(R.id.rvprodcafes);
+        recyclerViewtes = findViewById(R.id.rvprodtes);
+        recyclerViewcafe.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewtes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         // Configurar adaptador
         adaptador = new ProductoAdaptador(this, listaProductos);
-        recyclerView.setAdapter(adaptador);
+        recyclerViewcafe.setAdapter(adaptador);
+        recyclerViewtes.setAdapter(adaptador);
 
         // Obtener referencia a la base de datos Firebase y la ubicación de los productos
         DatabaseReference productosRef = FirebaseDatabase.getInstance().getReference().child("productos");
