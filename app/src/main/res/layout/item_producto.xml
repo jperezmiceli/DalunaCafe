@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/principalClarito"
     android:layout_width="250dp"
-    android:layout_height="400dp"
+    android:layout_height="350dp"
     android:layout_margin="8dp"
     android:padding="5dp"
     app:cardCornerRadius="14dp"
@@ -13,19 +13,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/imageViewProduct"
-            android:layout_width="229dp"
-            android:layout_height="220dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:maxHeight="180dp"
+            android:adjustViewBounds="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:maxHeight="30dp"
             android:scaleType="centerCrop"
             android:src="@drawable/dalunga240" />
 
@@ -42,6 +44,8 @@
             android:id="@+id/textViewProductDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:padding="8dp"
             android:text="Breve Descripción del Producto" />
 

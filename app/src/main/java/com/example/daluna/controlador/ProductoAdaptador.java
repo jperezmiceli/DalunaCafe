@@ -70,7 +70,6 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
             Glide.with(context)
                     .load(producto.getImagen())
                     .into(imageViewProducto);
-
             textViewNombre.setText(producto.getNombre());
             textViewDescripcion.setText(producto.getDescripcion());
             textViewPrecio.setText(context.getString(R.string.price_format, producto.getPrecio()));
@@ -84,5 +83,12 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                 }
             });
         }
+
+
+    }
+    public void actualizarLista(List<Producto> nuevosProductos) {
+        listaProductos.clear();
+        listaProductos.addAll(nuevosProductos);
+        notifyDataSetChanged();
     }
 }

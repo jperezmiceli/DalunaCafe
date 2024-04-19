@@ -27,6 +27,7 @@
     import com.google.firebase.FirebaseApp;
     import com.google.firebase.auth.AuthResult;
     import com.google.firebase.auth.FirebaseAuth;
+    import com.google.firebase.auth.FirebaseUser;
     import com.google.firebase.storage.FirebaseStorage;
 
     public class InicioSesion extends AppCompatActivity {
@@ -35,7 +36,9 @@
         private EditText mail;
         private EditText clave;
 
-        FirebaseAuth mAuth;
+        private FirebaseAuth mAuth;
+        private FirebaseUser firebaseUser;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -70,7 +73,8 @@
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Log.e(TAG, "Usuario registrado");
-                                    showHome(email);
+                                    firebaseUser = mAuth.getCurrentUser();
+                                    showHome(mAuth.getUid());
                                 } else {
                                     Log.e(TAG, "Error al iniciar sesión: " + task.getException().getMessage());
                                     showErrorDialog(task.getException().getMessage());
@@ -97,9 +101,9 @@
             builder.show();
         }
 
-        private void showHome(String correo) {
+        private void showHome(String id) {
             Intent intent = new Intent(this, Productos.class);
-            intent.putExtra("correo", correo);
+            intent.putExtra("id", id);
             startActivity(intent);
             finish();
         }
