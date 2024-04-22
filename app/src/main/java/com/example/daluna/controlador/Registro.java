@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Registro extends AppCompatActivity {
+    private ImageView atras;
     private Button registrar;
     private EditText mail;
     private EditText nombre;
@@ -49,6 +52,7 @@ public class Registro extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registro);
         FirebaseApp.initializeApp(this);
+        atras = findViewById(R.id.prodindatrasregistro);
         mail = findViewById(R.id.mailRegistro);
         claveUno = findViewById(R.id.claveUnoRegistro);
         claveDos = findViewById(R.id.claveDosRegistro);
@@ -65,6 +69,14 @@ public class Registro extends AppCompatActivity {
             return insets;
         });
 
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Registro.this,InicioSesion.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

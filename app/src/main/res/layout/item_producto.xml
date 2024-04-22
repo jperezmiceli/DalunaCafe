@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/principalClarito"
     android:layout_width="200dp"
-    android:layout_height="250dp"
+    android:layout_height="276dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="14dp"
     app:cardElevation="4dp">
@@ -40,11 +40,11 @@
             <TextView
                 android:id="@+id/textViewProductName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:padding="8dp"
                 android:text="Nombre del Producto"
                 android:textColor="#5F5958"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView

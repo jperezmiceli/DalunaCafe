@@ -24,6 +24,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     private List<Producto> listaProductos;
     private LayoutInflater inflater;
     private DatabaseReference databaseReference;
+    private OnItemClickListener listener;
 
     public ProductoAdaptador(Context context, List<Producto> listaProductos) {
         this.context = context;
@@ -56,6 +57,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         private TextView textViewPrecio;
         private Button buttonAddToCart;
 
+
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProducto = itemView.findViewById(R.id.imageViewProduct);
@@ -66,10 +68,16 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         }
 
         public void bind(final Producto producto) {
+            if (producto.getImagen().isEmpty()) {
+                producto.setImagen("https://firebasestorage.googleapis.com/v0/b/daluna-22b7a.appspot.com/o/imgDefecto.jpeg?alt=media&token=c2250b4a-df39-4b32-8cde-ee84470480a6");
 
+            }
             Glide.with(context)
+
                     .load(producto.getImagen())
                     .into(imageViewProducto);
+
+
             textViewNombre.setText(producto.getNombre());
 //            textViewDescripcion.setText(producto.getDescripcion());
             textViewPrecio.setText(context.getString(R.string.price_format, producto.getPrecio()));
@@ -82,13 +90,34 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     Toast.makeText(context, "Producto " + producto.getNombre() + " añadido al carrito", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            textViewNombre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(producto);
+                    }
+                }
+            });
+
         }
 
 
     }
+
     public void actualizarLista(List<Producto> nuevosProductos) {
         listaProductos.clear();
         listaProductos.addAll(nuevosProductos);
         notifyDataSetChanged();
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(Producto producto);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
 }

@@ -20,8 +20,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="323dp"
-        android:layout_height="448dp"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"
         android:orientation="vertical"
@@ -88,15 +88,42 @@
             android:layout_width="match_parent"
             android:layout_height="23dp" />
 
-        <Button
-            android:id="@+id/googlebutton"
+        <TextView
+            android:id="@+id/recuperarclave"
             android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:background="@color/white"
-            android:drawableStart="@mipmap/google30"
-            android:padding="5dp"
-            android:text="Google"
-            android:textColor="@color/principaloscuro" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Recuperar clave"
+            android:textColor="@color/principaloscuro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="23dp" />
+
+        <LinearLayout
+            android:layout_width="281dp"
+            android:layout_height="36dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/googlebutton"
+                android:layout_width="106dp"
+                android:layout_height="37dp"
+                android:background="@drawable/fondoblancoredondeado"
+                android:drawableStart="@mipmap/google30"
+                android:padding="5dp"
+
+                android:text="Google"
+                android:textColor="@color/principaloscuro" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -110,5 +137,18 @@
             android:text="No tienes cuenta? Registrate" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/iniciodesesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:gravity="center_horizontal"
+        android:text="Iniciar sin registrarse"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

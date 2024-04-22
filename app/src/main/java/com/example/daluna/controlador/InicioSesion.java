@@ -2,7 +2,6 @@
 
     import static android.content.ContentValues.TAG;
 
-    import android.annotation.SuppressLint;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.os.Bundle;
@@ -10,21 +9,16 @@
     import android.view.View;
     import android.widget.Button;
     import android.widget.EditText;
+    import android.widget.ImageView;
+    import android.widget.TextView;
 
-    import androidx.activity.EdgeToEdge;
     import androidx.annotation.NonNull;
     import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
-    import androidx.core.graphics.Insets;
-    import androidx.core.view.ViewCompat;
-    import androidx.core.view.WindowInsetsCompat;
 
     import com.example.daluna.R;
-    import com.example.daluna.modelo.Producto;
-    import com.example.daluna.modelo.Usuario;
     import com.google.android.gms.tasks.OnCompleteListener;
     import com.google.android.gms.tasks.Task;
-    import com.google.firebase.FirebaseApp;
     import com.google.firebase.auth.AuthResult;
     import com.google.firebase.auth.FirebaseAuth;
     import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +29,8 @@
         private Button enviar;
         private EditText mail;
         private EditText clave;
-
+        private TextView iniciosincuenta;
+        private TextView recuperarclave;
         private FirebaseAuth mAuth;
         private FirebaseUser firebaseUser;
 
@@ -45,16 +40,35 @@
             setContentView(R.layout.activity_main);
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
+
             mAuth = FirebaseAuth.getInstance();
             enviar = findViewById(R.id.buttonregistrar);
             registrar = findViewById(R.id.registrate);
             mail = findViewById(R.id.nombreRegistro);
             clave = findViewById(R.id.claveDosRegistro);
+            iniciosincuenta = findViewById(R.id.iniciodesesion);
+            recuperarclave = findViewById(R.id.recuperarclave);
 
             registrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(InicioSesion.this, Registro.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            iniciosincuenta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(InicioSesion.this, Productos.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            recuperarclave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(InicioSesion.this, RecuperacionClave.class);
                     startActivity(intent);
                     finish();
                 }

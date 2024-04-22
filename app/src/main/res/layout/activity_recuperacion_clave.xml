@@ -9,6 +9,17 @@
     tools:context=".controlador.InicioSesion">
 
     <ImageView
+        android:id="@+id/prodindatrasrec"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="@color/white"
+        android:src="?attr/actionModeCloseDrawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="222dp"
         android:layout_height="228dp"
@@ -20,7 +31,7 @@
 
     <LinearLayout
         android:id="@+id/linearrec"
-        android:layout_width="wrap_content"
+        android:layout_width="343dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"

@@ -1,7 +1,10 @@
 package com.example.daluna.controlador;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Productos extends AppCompatActivity {
+public class Productos extends AppCompatActivity implements ProductoAdaptador.OnItemClickListener {
 
     private TextView puntosUsuario;
 
@@ -60,6 +63,8 @@ public class Productos extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
 
+    private ImageView iraperfil;
+
     // ID de usuario
     private String idUsuario = "";
 
@@ -67,6 +72,8 @@ public class Productos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productos);
+
+        iraperfil = findViewById(R.id.perfilbotonproductos);
         idUsuario = getIntent().getStringExtra("id");
         puntosUsuario = findViewById(R.id.tuspuntos);
 
@@ -120,6 +127,8 @@ public class Productos extends AppCompatActivity {
         recyclerViewBebidas.setAdapter(adaptadorBebidas);
         recyclerViewVinoCerveza.setAdapter(adaptadorVinoCerveza);
 
+
+
         // Obtención de la referencia a la base de datos Firebase y la ubicación de los productos
         DatabaseReference productosRef = FirebaseDatabase.getInstance().getReference().child("productos");
 
@@ -128,27 +137,48 @@ public class Productos extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listaProductosCafe.clear(); // Limpiar la lista de productos de café
-                listaProductosTeInfusiones.clear(); // Limpiar la lista de productos de té/infusiones
-                listaProductosDesayuno.clear(); // Limpiar la lista de productos de desayunos
-                listaProductosBrunch.clear(); // Limpiar la lista de productos de brunch
-                listaProductosZumoSmuthie.clear(); // Limpiar la lista de productos de zumo & smuthie
-                listaProductosBebidas.clear(); // Limpiar la lista de productos de bebidas
-                listaProductosVinoCerveza.clear(); // Limpiar la lista de productos de vino & cerveza
-
+                listaProductos.clear(); // Limpiar la lista de productos
                 for (DataSnapshot productoSnapshot : dataSnapshot.getChildren()) {
                     Producto producto = productoSnapshot.getValue(Producto.class);
                     listaProductos.add(producto);
                 }
 
                 // Agregar productos a las listas correspondientes
-                listaProductosCafe.addAll(filtrarProductosPorCategoria(listaProductos, "cafe"));
-                listaProductosTeInfusiones.addAll(filtrarProductosPorCategoria(listaProductos, "TeInfusiones"));
-                listaProductosDesayuno.addAll(filtrarProductosPorCategoria(listaProductos, "Desayunos"));
-                listaProductosBrunch.addAll(filtrarProductosPorCategoria(listaProductos, "Brunch"));
-                listaProductosZumoSmuthie.addAll(filtrarProductosPorCategoria(listaProductos, "ZumoSmuthie"));
-                listaProductosBebidas.addAll(filtrarProductosPorCategoria(listaProductos, "Bebidas"));
-                listaProductosVinoCerveza.addAll(filtrarProductosPorCategoria(listaProductos, "VinoCerveza"));
+                listaProductosCafe.clear();
+                listaProductosTeInfusiones.clear();
+                listaProductosDesayuno.clear();
+                listaProductosBrunch.clear();
+                listaProductosZumoSmuthie.clear();
+                listaProductosBebidas.clear();
+                listaProductosVinoCerveza.clear();
+
+                for (Producto producto : listaProductos) {
+                    switch (producto.getCategoria()) {
+                        case "cafe":
+                            listaProductosCafe.add(producto);
+                            break;
+                        case "TeInfusiones":
+                            listaProductosTeInfusiones.add(producto);
+                            break;
+                        case "Desayunos":
+                            listaProductosDesayuno.add(producto);
+                            break;
+                        case "Brunch":
+                            listaProductosBrunch.add(producto);
+                            break;
+                        case "ZumoSmuthie":
+                            listaProductosZumoSmuthie.add(producto);
+                            break;
+                        case "Bebidas":
+                            listaProductosBebidas.add(producto);
+                            break;
+                        case "VinoCerveza":
+                            listaProductosVinoCerveza.add(producto);
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
                 // Notificar cambios en los adaptadores
                 adaptadorCafe.notifyDataSetChanged();
@@ -166,35 +196,68 @@ public class Productos extends AppCompatActivity {
             }
         });
 
-        // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
-        databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        iraperfil.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String uid = snapshot.getKey();
-                    String nombre = ""+snapshot.child("nombre").getValue();
-                    String apellidos = ""+snapshot.child("apellidos").getValue();
-                    String correo = ""+snapshot.child("correo").getValue();
-                    String puntos = "" + snapshot.child("puntos").getValue();
-                    puntosUsuario.setText(puntos);
+            public void onClick(View v) {
+                if(firebaseUser != null){
+                    Intent intent = new Intent(Productos.this, PerfilUsuario.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(Productos.this, InicioSesion.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Productos.this, "Error al obtener puntos de usuario", Toast.LENGTH_SHORT).show();
-            }
         });
+
+        // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
+        if (firebaseUser != null) {
+
+            // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
+            databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String uid = snapshot.getKey();
+                        String nombre = "" + snapshot.child("nombre").getValue();
+                        String apellidos = "" + snapshot.child("apellidos").getValue();
+                        String correo = "" + snapshot.child("correo").getValue();
+                        String puntos = "" + snapshot.child("puntos").getValue();
+                        puntosUsuario.setText(puntos);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(Productos.this, "Error al obtener puntos de usuario", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // El usuario no está autenticado, no intentar obtener sus puntos
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+        }
+
+
+        // Configurar el listener en el adaptador
+        adaptadorCafe.setOnItemClickListener(this);
+        adaptadorTeInfusiones.setOnItemClickListener(this);
+        adaptadorDesayunos.setOnItemClickListener(this);
+        adaptadorBrunch.setOnItemClickListener(this);
+        adaptadorZumoSmuthie.setOnItemClickListener(this);
+        adaptadorBebidas.setOnItemClickListener(this);
+        adaptadorVinoCerveza.setOnItemClickListener(this);
     }
 
-    // Método para filtrar productos por categoría
-    private List<Producto> filtrarProductosPorCategoria(List<Producto> listaProductos, String categoria) {
-        List<Producto> productosFiltrados = new ArrayList<>();
-        for (Producto producto : listaProductos) {
-            if (producto.getCategoria().equals(categoria)) {
-                productosFiltrados.add(producto);
-            }
-        }
-        return productosFiltrados;
+    @Override
+    public void onItemClick(Producto producto) {
+        // Aquí puedes iniciar la nueva actividad y pasar los datos del producto
+        Intent intent = new Intent(this, producto_individual.class);
+        intent.putExtra("producto_imagen", producto.getImagen());
+        intent.putExtra("producto_nombre", producto.getNombre());
+        intent.putExtra("producto_precio", producto.getPrecio());
+        intent.putExtra("producto_descripcion", producto.getDescripcion());
+        // Agrega más datos si es necesario
+        startActivity(intent);
     }
 }
