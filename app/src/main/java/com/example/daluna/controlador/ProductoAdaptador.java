@@ -60,7 +60,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
             super(itemView);
             imageViewProducto = itemView.findViewById(R.id.imageViewProduct);
             textViewNombre = itemView.findViewById(R.id.textViewProductName);
-            textViewDescripcion = itemView.findViewById(R.id.textViewProductDescription);
+//            textViewDescripcion = itemView.findViewById(R.id.textViewProductDescription);
             textViewPrecio = itemView.findViewById(R.id.textViewProductPrice);
             buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
         }
@@ -71,7 +71,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     .load(producto.getImagen())
                     .into(imageViewProducto);
             textViewNombre.setText(producto.getNombre());
-            textViewDescripcion.setText(producto.getDescripcion());
+//            textViewDescripcion.setText(producto.getDescripcion());
             textViewPrecio.setText(context.getString(R.string.price_format, producto.getPrecio()));
 
             buttonAddToCart.setOnClickListener(new View.OnClickListener() {
