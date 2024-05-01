@@ -3,12 +3,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/principalClarito"
-    android:layout_width="200dp"
-    android:layout_height="276dp"
+    android:layout_width="204dp"
+    android:layout_height="280dp"
     android:layout_margin="8dp"
     app:cardCornerRadius="14dp"
     app:cardElevation="4dp">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,40 +29,51 @@
             android:scaleType="centerCrop"
             android:src="@drawable/dalunga240" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textViewProductName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:orientation="vertical">
+            android:layout_height="60dp"
+            android:padding="8dp"
+            android:text="Nombre del Producto"
+            android:textColor="#5F5958"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textViewProductName"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:padding="8dp"
-                android:text="Nombre del Producto"
-                android:textColor="#5F5958"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintBotonAddCarrito"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/fondobotonclarooscuro">
 
             <TextView
                 android:id="@+id/textViewProductPrice"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Precio: $0.00"
-                android:textColor="#5F5958" />
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="Precio: 0.00€"
+                android:textColor="#5F5958"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imageViewAddToCart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/buttonAddToCart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/botones"
-                android:backgroundTint="#937F84"
-                android:padding="8dp"
-                android:text="Añadir al Carrito" />
-        </LinearLayout>
-
+            <ImageView
+                android:id="@+id/imageViewAddToCart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Añadir al carrito"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/add2carri" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

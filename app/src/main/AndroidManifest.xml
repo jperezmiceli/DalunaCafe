@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Daluna"
         tools:targetApi="31">
         <activity
+            android:name=".Carrito"
+            android:exported="false" />
+        <activity
             android:name=".controlador.producto_individual"
             android:exported="false" />
         <activity

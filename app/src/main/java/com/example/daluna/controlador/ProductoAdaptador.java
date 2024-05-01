@@ -4,18 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.daluna.R;
 import com.example.daluna.modelo.Producto;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
@@ -23,7 +23,6 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     private Context context;
     private List<Producto> listaProductos;
     private LayoutInflater inflater;
-    private DatabaseReference databaseReference;
     private OnItemClickListener listener;
 
     public ProductoAdaptador(Context context, List<Producto> listaProductos) {
@@ -51,38 +50,35 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     }
 
     public class ProductoViewHolder extends RecyclerView.ViewHolder {
+
         private ImageView imageViewProducto;
         private TextView textViewNombre;
-        private TextView textViewDescripcion;
-        private TextView textViewPrecio;
-        private Button buttonAddToCart;
-
+        private TextView textViewProductPrice;
+        private ImageView imageViewAddToCart;
+        private ConstraintLayout constraintLayout;
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProducto = itemView.findViewById(R.id.imageViewProduct);
             textViewNombre = itemView.findViewById(R.id.textViewProductName);
-//            textViewDescripcion = itemView.findViewById(R.id.textViewProductDescription);
-            textViewPrecio = itemView.findViewById(R.id.textViewProductPrice);
-            buttonAddToCart = itemView.findViewById(R.id.buttonAddToCart);
+            textViewProductPrice = itemView.findViewById(R.id.textViewProductPrice);
+            imageViewAddToCart = itemView.findViewById(R.id.imageViewAddToCart);
+            constraintLayout = itemView.findViewById(R.id.constraintBotonAddCarrito);
         }
 
         public void bind(final Producto producto) {
             if (producto.getImagen().isEmpty()) {
                 producto.setImagen("https://firebasestorage.googleapis.com/v0/b/daluna-22b7a.appspot.com/o/imgDefecto.jpeg?alt=media&token=c2250b4a-df39-4b32-8cde-ee84470480a6");
-
             }
-            Glide.with(context)
 
+            Glide.with(context)
                     .load(producto.getImagen())
                     .into(imageViewProducto);
 
-
             textViewNombre.setText(producto.getNombre());
-//            textViewDescripcion.setText(producto.getDescripcion());
-            textViewPrecio.setText(context.getString(R.string.price_format, producto.getPrecio()));
+            textViewProductPrice.setText(context.getString(R.string.price_format, producto.getPrecio()));
 
-            buttonAddToCart.setOnClickListener(new View.OnClickListener() {
+            constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Aquí puedes implementar la lógica para añadir el producto al carrito
@@ -91,7 +87,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                 }
             });
 
-            textViewNombre.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
@@ -99,10 +95,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     }
                 }
             });
-
         }
-
-
     }
 
     public void actualizarLista(List<Producto> nuevosProductos) {
@@ -118,6 +111,4 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
-
 }

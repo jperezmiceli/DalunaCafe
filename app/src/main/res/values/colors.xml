@@ -2,8 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="principal">#947F85</color>
+    <color name="rosa">#d3c0d1</color>
+    <color name="principal">#957e84</color>
     <color name="principaloscuro">#564749</color>
-    <color name="principalClarito">#D0C3BF</color>
+    <color name="principaloscuromas">#B4957E84</color>
+    <color name="principalClarito">#d0c3bf</color>
+    <color name="principalClarito2">#CFB3BB</color>
+    <color name="principalClarito3">#B89FA6</color>
 
 </resources>
