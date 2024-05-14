@@ -2,9 +2,11 @@ package com.example.daluna.controlador;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.daluna.R;
+
 import com.example.daluna.modelo.Producto;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,12 +26,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Productos extends AppCompatActivity implements ProductoAdaptador.OnItemClickListener {
 
+
     private TextView puntosUsuario;
+    private LinearLayout linearCarrito;
 
     // RecyclerViews
     private RecyclerView recyclerViewCafe;
@@ -59,6 +65,8 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
     private List<Producto> listaProductosVinoCerveza;
 
     // Firebase
+
+    private FirebaseManager firebaseManager;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
@@ -72,6 +80,14 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productos);
+
+        // Inicializar la base de datos
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+
+
+        linearCarrito = findViewById(R.id.linearCarrito);
 
         iraperfil = findViewById(R.id.perfilbotonproductos);
         idUsuario = getIntent().getStringExtra("id");
@@ -127,6 +143,14 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
         recyclerViewBebidas.setAdapter(adaptadorBebidas);
         recyclerViewVinoCerveza.setAdapter(adaptadorVinoCerveza);
 
+        linearCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Productos.this, Carrito.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         // Obtención de la referencia a la base de datos Firebase y la ubicación de los productos
@@ -140,7 +164,9 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
                 listaProductos.clear(); // Limpiar la lista de productos
                 for (DataSnapshot productoSnapshot : dataSnapshot.getChildren()) {
                     Producto producto = productoSnapshot.getValue(Producto.class);
+                    producto.setId(productoSnapshot.getKey()); // Establecer el ID del producto
                     listaProductos.add(producto);
+
                 }
 
                 // Agregar productos a las listas correspondientes
@@ -199,11 +225,11 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
         iraperfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firebaseUser != null){
+                if (firebaseUser != null) {
                     Intent intent = new Intent(Productos.this, PerfilUsuario.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Intent intent = new Intent(Productos.this, InicioSesion.class);
                     startActivity(intent);
                     finish();
@@ -260,4 +286,7 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
         // Agrega más datos si es necesario
         startActivity(intent);
     }
+    // Supongamos que este método se llama cuando el usuario hace clic en un botón para ir al carrito
+
+
 }

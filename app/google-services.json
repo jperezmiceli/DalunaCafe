@@ -1,37 +1,27 @@
 {
   "project_info": {
-    "project_number": "379498704645",
-    "firebase_url": "https://daluna-22b7a-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "daluna-22b7a",
-    "storage_bucket": "daluna-22b7a.appspot.com"
+    "project_number": "856313492257",
+    "firebase_url": "https://dalunacafe-fbd29-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "dalunacafe-fbd29",
+    "storage_bucket": "dalunacafe-fbd29.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:379498704645:android:8e21a40789b6373e04116c",
+        "mobilesdk_app_id": "1:856313492257:android:435e43e3af97f2c5298460",
         "android_client_info": {
           "package_name": "com.example.daluna"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "379498704645-ldm697fohjlft04ll7bsp8qsgrn7oj43.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAt_LCrPb8FRRWD33wcGoRzDVFIVQvSTB0"
+          "current_key": "AIzaSyBXvRcw9XH5irxwyB1gmm-t9cWDl1pgyY4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "379498704645-ldm697fohjlft04ll7bsp8qsgrn7oj43.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

@@ -1,72 +1,118 @@
 package com.example.daluna.modelo;
 
-import java.util.ArrayList;
+
+
+import java.util.Date;
 import java.util.List;
 
 public class Venta {
-    private String idVenta;
-    private String idUsuario;
-    private List<Producto> productos;
-    private double total;
-    private String fecha;
+    private String numeroPedido;
+    private Date fechaVenta;
+    private String clienteId;
+    private List<CarritoModelo> carritoList; // Lista de productos en el carrito
+    private double totalVenta;
+    private String metodoPago;
+    private String direccionEntrega;
+    private String tiempoEstimadoEntrega; // Tiempo estimado de entrega
+    private String estado; // Por ejemplo: pendiente, en camino, entregado, cancelado
 
     public Venta() {
-        // Constructor vacío requerido para Firebase
+        // Constructor vacío requerido por Firebase
     }
 
-    public Venta(String idVenta, String idUsuario, List<Producto> productos, double total, String fecha) {
-        this.idVenta = idVenta;
-        this.idUsuario = idUsuario;
-        this.productos = productos;
-        this.total = total;
-        this.fecha = fecha;
+    public Venta(String numeroPedido, Date fechaVenta, String clienteId, List<CarritoModelo> carritoList,
+                 double totalVenta, String metodoPago, String direccionEntrega, String estado) {
+        this.numeroPedido = numeroPedido;
+        this.fechaVenta = fechaVenta;
+        this.clienteId = clienteId;
+        this.carritoList = carritoList;
+        this.totalVenta = totalVenta;
+        this.metodoPago = metodoPago;
+        this.direccionEntrega = direccionEntrega;
+        this.estado = estado;
+        // Calculamos el tiempo estimado de entrega automáticamente
+        this.tiempoEstimadoEntrega = calcularTiempoEstimadoEntrega();
     }
 
-    public String getIdVenta() {
-        return idVenta;
+    private String calcularTiempoEstimadoEntrega() {
+        // Lógica para calcular el tiempo estimado de entrega basado en los productos en el carrito,
+        // la dirección de entrega, etc.
+        // Aquí puedes implementar tu lógica para calcular el tiempo estimado de entrega de manera inteligente.
+        return "1 hora"; // Ejemplo: se establece un tiempo fijo para la demostración
     }
 
-    public void setIdVenta(String idVenta) {
-        this.idVenta = idVenta;
+    // Getters y setters
+
+    public String getNumeroPedido() {
+        return numeroPedido;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public void setNumeroPedido(String numeroPedido) {
+        this.numeroPedido = numeroPedido;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public Date getFechaVenta() {
+        return fechaVenta;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
+    public void setFechaVenta(Date fechaVenta) {
+        this.fechaVenta = fechaVenta;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public String getClienteId() {
+        return clienteId;
     }
 
-    public double getTotal() {
-        return total;
+    public void setClienteId(String clienteId) {
+        this.clienteId = clienteId;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public List<CarritoModelo> getCarritoList() {
+        return carritoList;
     }
 
-    public String getFecha() {
-        return fecha;
+    public void setCarritoList(List<CarritoModelo> carritoList) {
+        this.carritoList = carritoList;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public double getTotalVenta() {
+        return totalVenta;
     }
 
-    // Método para agregar un producto a la venta
-    public void agregarProducto(Producto producto) {
-        if (productos == null) {
-            productos = new ArrayList<>();
-        }
-        productos.add(producto);
+    public void setTotalVenta(double totalVenta) {
+        this.totalVenta = totalVenta;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public String getTiempoEstimadoEntrega() {
+        return tiempoEstimadoEntrega;
+    }
+
+    public void setTiempoEstimadoEntrega(String tiempoEstimadoEntrega) {
+        this.tiempoEstimadoEntrega = tiempoEstimadoEntrega;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }
+

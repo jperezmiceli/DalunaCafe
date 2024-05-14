@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +23,8 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     private List<Producto> listaProductos;
     private LayoutInflater inflater;
     private OnItemClickListener listener;
+    private OnAddToCartClickListener addToCartClickListener;
+
 
     public ProductoAdaptador(Context context, List<Producto> listaProductos) {
         this.context = context;
@@ -56,7 +57,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         private TextView textViewProductPrice;
         private ImageView imageViewAddToCart;
         private ConstraintLayout constraintLayout;
-
+        private FirebaseManager firebaseManager = new FirebaseManager();
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProducto = itemView.findViewById(R.id.imageViewProduct);
@@ -83,9 +84,16 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                 public void onClick(View v) {
                     // Aquí puedes implementar la lógica para añadir el producto al carrito
                     // Por ejemplo, mostrar un mensaje de confirmación
+                    firebaseManager.agregarProductoAlCarrito(producto);
                     Toast.makeText(context, "Producto " + producto.getNombre() + " añadido al carrito", Toast.LENGTH_SHORT).show();
+
+                    // Aquí se llama al método de la interfaz para comunicar la acción de agregar al carrito
+                    if (addToCartClickListener != null) {
+                        addToCartClickListener.onAddToCartClick(producto);
+                    }
                 }
             });
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,9 +103,19 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     }
                 }
             });
+
+
         }
     }
+    // Interfaz para manejar la acción de clic en el botón agregar al carrito
+    public interface OnAddToCartClickListener {
+        void onAddToCartClick(Producto producto);
+    }
 
+    // Método para establecer el listener
+    public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
+        this.addToCartClickListener = listener;
+    }
     public void actualizarLista(List<Producto> nuevosProductos) {
         listaProductos.clear();
         listaProductos.addAll(nuevosProductos);
