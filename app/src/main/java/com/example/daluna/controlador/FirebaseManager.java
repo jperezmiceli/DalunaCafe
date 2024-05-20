@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.example.daluna.modelo.CarritoModelo;
 import com.example.daluna.modelo.Producto;
+import com.example.daluna.modelo.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseManager {
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private DatabaseReference databaseReferenceUsuarios;
     private DatabaseReference databaseReferenceProductos;
 
@@ -24,6 +27,7 @@ public class FirebaseManager {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceUsuarios = firebaseDatabase.getReference().child("usuarios");
         databaseReferenceProductos = firebaseDatabase.getReference().child("productos");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public DatabaseReference getDatabaseReferenceUsuarios() {
@@ -41,6 +45,33 @@ public class FirebaseManager {
         }
         return null;
     }
+    public void obtenerUsuarioActual(ValueEventListener listener) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference usuarioRef = databaseReferenceUsuarios.child(currentUser.getUid());
+            usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                        listener.onDataChange(dataSnapshot);
+                    } else {
+                        // El usuario no existe en la base de datos
+                        listener.onDataChange(null);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    listener.onCancelled(databaseError);
+                }
+            });
+        } else {
+            // El usuario no está autenticado
+            listener.onDataChange(null);
+        }
+    }
+
 
     public void agregarProductoAlCarrito(Producto producto) {
         DatabaseReference carritoUsuarioRef = getDatabaseReferenceCarritoUsuarioActual();
@@ -64,6 +95,7 @@ public class FirebaseManager {
                         productoRef.child("cantidad").setValue(1);
                         productoRef.child("precio").setValue(precioUnitario);
                         productoRef.child("precioTotal").setValue(precioUnitario);
+                        productoRef.child("comentario");
                     }
                 }
 
@@ -89,8 +121,9 @@ public class FirebaseManager {
                         int cantidad = carritoSnapshot.child("cantidad").getValue(Integer.class);
                         double precio = carritoSnapshot.child("precio").getValue(Double.class);
                         double precioTotal = carritoSnapshot.child("precioTotal").getValue(Double.class);
+                        String comentario = carritoSnapshot.child("comentario").getValue(String.class);
 
-                        CarritoModelo carrito = new CarritoModelo(productoId, nombre, categoria, imagen, cantidad, precio, precioTotal);
+                        CarritoModelo carrito = new CarritoModelo(productoId, nombre, categoria, imagen, cantidad, precio, precioTotal,comentario);
                     }
 
                     listener.onDataChange(dataSnapshot);

@@ -1,4 +1,4 @@
-<!-- item_product.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -57,8 +57,8 @@
                 android:orientation="horizontal">
 
                 <!-- Cantidad -->
-                <View
-                    android:id="@+id/view"
+                <ImageView
+                    android:id="@+id/imgViewProductoCarrito"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1" />
@@ -87,15 +87,9 @@
                     android:text="+"
                     android:textSize="20sp" />
 
-                <!-- Precio -->
-
-                <!-- Botón eliminar -->
-
-
             </LinearLayout>
 
-
-            <!-- Espacio para agregar un pequeño comentario -->
+            <!-- Precio -->
             <TextView
                 android:id="@+id/textViewProductPrice"
                 android:layout_width="wrap_content"
@@ -107,6 +101,7 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
+            <!-- Espacio para agregar un pequeño comentario -->
             <TextView
                 android:id="@+id/comentariocarrito"
                 android:layout_width="match_parent"
@@ -121,10 +116,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Añadir comentario"
+                android:hint="No olvide en caso de que sea necesario agregar sus preferencias sobre este pedido"
                 android:textColorHint="#A9A9A9"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/btnGuardarComentario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Guardar Comentario"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 

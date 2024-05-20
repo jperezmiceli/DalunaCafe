@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="cursive"
+            android:fontFamily="sans-serif-smallcaps"
             android:text="Iniciar sesión"
             android:textSize="34sp" />
 
@@ -68,6 +68,7 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:padding="8dp"
+            android:textColor="@color/black"
             android:textColorHint="@color/principal" />
 
         <Space

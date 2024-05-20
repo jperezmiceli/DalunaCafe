@@ -20,16 +20,16 @@ public class Venta {
         // Constructor vacío requerido por Firebase
     }
 
-    public Venta(String numeroPedido, Date fechaVenta, String clienteId, List<CarritoModelo> carritoList,
-                 double totalVenta, String metodoPago, String direccionEntrega, String estado) {
+    public Venta(String numeroPedido, String clienteId, List<CarritoModelo> carritoList,
+                 double totalVenta, String direccionEntrega) {
         this.numeroPedido = numeroPedido;
-        this.fechaVenta = fechaVenta;
+        this.fechaVenta = new Date();
         this.clienteId = clienteId;
         this.carritoList = carritoList;
         this.totalVenta = totalVenta;
-        this.metodoPago = metodoPago;
+        this.metodoPago = "";
         this.direccionEntrega = direccionEntrega;
-        this.estado = estado;
+        this.estado = "espera";
         // Calculamos el tiempo estimado de entrega automáticamente
         this.tiempoEstimadoEntrega = calcularTiempoEstimadoEntrega();
     }

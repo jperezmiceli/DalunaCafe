@@ -87,11 +87,10 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
 
 
 
-        linearCarrito = findViewById(R.id.linearCarrito);
+
 
         iraperfil = findViewById(R.id.perfilbotonproductos);
         idUsuario = getIntent().getStringExtra("id");
-        puntosUsuario = findViewById(R.id.tuspuntos);
 
         // Inicialización de Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -143,14 +142,7 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
         recyclerViewBebidas.setAdapter(adaptadorBebidas);
         recyclerViewVinoCerveza.setAdapter(adaptadorVinoCerveza);
 
-        linearCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Productos.this, Carrito.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
 
 
         // Obtención de la referencia a la base de datos Firebase y la ubicación de los productos
@@ -237,32 +229,31 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
             }
         });
 
-        // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
-        if (firebaseUser != null) {
-
-            // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
-            databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        String uid = snapshot.getKey();
-                        String nombre = "" + snapshot.child("nombre").getValue();
-                        String apellidos = "" + snapshot.child("apellidos").getValue();
-                        String correo = "" + snapshot.child("correo").getValue();
-                        String puntos = "" + snapshot.child("puntos").getValue();
-                        puntosUsuario.setText(puntos);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(Productos.this, "Error al obtener puntos de usuario", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            // El usuario no está autenticado, no intentar obtener sus puntos
-            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
-        }
+//        // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
+//        if (firebaseUser != null) {
+//
+//            // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
+//            databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.exists()) {
+//                        String uid = snapshot.getKey();
+//                        String nombre = "" + snapshot.child("nombre").getValue();
+//                        String apellidos = "" + snapshot.child("apellidos").getValue();
+//                        String correo = "" + snapshot.child("correo").getValue();
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                    Toast.makeText(Productos.this, "Error al obtener puntos de usuario", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        } else {
+//            // El usuario no está autenticado, no intentar obtener sus puntos
+//            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+//        }
 
 
         // Configurar el listener en el adaptador
