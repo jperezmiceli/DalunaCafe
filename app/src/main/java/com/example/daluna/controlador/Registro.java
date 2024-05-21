@@ -5,23 +5,23 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
+import com.example.daluna.Principal;
 import com.example.daluna.R;
 import com.example.daluna.modelo.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,25 +33,24 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class Registro extends AppCompatActivity {
     private ImageView atras;
     private Button registrar;
-    private EditText mail;
-    private EditText nombre;
-    private EditText numero;
-    private EditText apellidos;
-    private EditText claveUno;
-    private EditText claveDos;
-     FirebaseAuth mAuth;
-     DatabaseReference databaseReference;
+    private EditText mail, nombre, numero, apellidos, claveUno, claveDos;
+    private ImageView showPasswordButton1, showPasswordButton2;
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registro);
         FirebaseApp.initializeApp(this);
+
+        // Initialize views
         atras = findViewById(R.id.prodindatrasregistro);
         mail = findViewById(R.id.mailRegistro);
         claveUno = findViewById(R.id.claveUnoRegistro);
@@ -60,31 +59,31 @@ public class Registro extends AppCompatActivity {
         apellidos = findViewById(R.id.apellidoRegistro);
         numero = findViewById(R.id.movilRegistro);
         registrar = findViewById(R.id.buttonregistrar);
+        showPasswordButton1 = findViewById(R.id.showPasswordButton1);
+        showPasswordButton2 = findViewById(R.id.showPasswordButton2);
+
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Restrict the "numero" field to only accept numbers
+        numero.setInputType(InputType.TYPE_CLASS_PHONE);
 
         atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Registro.this,InicioSesion.class);
+                Intent intent = new Intent(Registro.this, InicioSesion.class);
                 startActivity(intent);
                 finish();
             }
         });
+
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = mail.getText().toString();
                 String password = claveDos.getText().toString();
 
-
-                if (!email.isEmpty() && !password.isEmpty() && claveUno.getText().toString().equals(claveDos.getText().toString()) & apellidos != null & nombre != null ) {
+                if (validateInputs() && isValidPassword(password) && claveUno.getText().toString().equals(claveDos.getText().toString())) {
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(Registro.this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -97,18 +96,99 @@ public class Registro extends AppCompatActivity {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(Registro.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Registro.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                         updateUI(null);
                                     }
                                 }
                             });
                 } else {
-                    Log.e(TAG, "error");
+                    showErrorDialog("Please ensure all fields are filled correctly. Make sure the password meets the requirements.");
                 }
             }
         });
 
+        showPasswordButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(claveUno, showPasswordButton1);
+            }
+        });
+
+        showPasswordButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                togglePasswordVisibility(claveDos, showPasswordButton2);
+            }
+        });
+    }
+
+    private boolean validateInputs() {
+        boolean isValid = true;
+
+        // Reset background to default
+        Drawable defaultBackground = ContextCompat.getDrawable(this, R.drawable.fondoiniciosesion);
+
+        if (nombre.getText().toString().isEmpty()) {
+            nombre.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            nombre.setBackground(defaultBackground);
+        }
+
+        if (apellidos.getText().toString().isEmpty()) {
+            apellidos.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            apellidos.setBackground(defaultBackground);
+        }
+
+        if (numero.getText().toString().isEmpty()) {
+            numero.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            numero.setBackground(defaultBackground);
+        }
+
+        if (mail.getText().toString().isEmpty()) {
+            mail.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            mail.setBackground(defaultBackground);
+        }
+
+        if (claveUno.getText().toString().isEmpty()) {
+            claveUno.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            claveUno.setBackground(defaultBackground);
+        }
+
+        if (claveDos.getText().toString().isEmpty()) {
+            claveDos.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+            isValid = false;
+        } else {
+            claveDos.setBackground(defaultBackground);
+        }
+
+        return isValid;
+    }
+
+    private boolean isValidPassword(String password) {
+        // Al menos 6 caracteres, una letra mayúscula, un número y un carácter especial (incluyendo '.')
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=.!]).{6,}$");
+        return pattern.matcher(password).matches();
+    }
+
+
+    private void togglePasswordVisibility(EditText passwordField, ImageView toggleButton) {
+        if (passwordField.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+            passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            toggleButton.setImageResource(R.drawable.ic_show_password);
+        } else {
+            passwordField.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            toggleButton.setImageResource(R.drawable.ic_hide_password);
+        }
+        passwordField.setSelection(passwordField.getText().length());
     }
 
     private void showErrorDialog(String errorMessage) {
@@ -118,60 +198,44 @@ public class Registro extends AppCompatActivity {
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Aquí puedes agregar cualquier lógica adicional que necesites después de que el usuario acepte el mensaje de error
+                // Additional logic after the user acknowledges the error message
             }
         });
         builder.show();
     }
 
-
-    // Dentro del método updateUI()
-
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            // El usuario se registró correctamente, mostrar un mensaje de bienvenida
             Toast.makeText(this, "¡Registro exitoso! Bienvenido, " + user.getEmail(), Toast.LENGTH_SHORT).show();
 
-            // Obtener la referencia a la ubicación "usuarios" en la base de datos Firebase
             DatabaseReference usuariosRef = databaseReference.child("usuarios");
 
-            // Obtener los datos del usuario para guardarlos en Firebase
             String userId = user.getUid();
             String userEmail = user.getEmail();
             String userNombre = nombre.getText().toString();
             String userApellidos = apellidos.getText().toString();
             String userNumero = numero.getText().toString();
-            String userUbicacion = "Ubicación del usuario"; // Aquí debes obtener la ubicación del usuario si es necesario
 
-            // Crear un objeto Usuario con los datos del usuario
-            Usuario nuevoUsuario = new Usuario(userNombre, userApellidos, userNumero, userEmail, userUbicacion);
+            Usuario nuevoUsuario = new Usuario(userNombre, userApellidos, userNumero, userEmail);
 
-            // Guardar el nuevo usuario en la base de datos Firebase
             usuariosRef.child(userId).setValue(nuevoUsuario)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                // Los datos del usuario se guardaron exitosamente en Firebase
                                 Log.d(TAG, "Datos del usuario guardados en Firebase correctamente");
                             } else {
-                                // Hubo un error al guardar los datos del usuario en Firebase
                                 Log.e(TAG, "Error al guardar los datos del usuario en Firebase", task.getException());
                             }
                         }
                     });
 
-            // También puedes redirigir al usuario a otra actividad o realizar otras acciones según sea necesario
-            Intent intent = new Intent(this, Home.class);
-            intent.putExtra("correo", mail.getText().toString());
-            intent.putExtra("id", userId);
+            Intent intent = new Intent(Registro.this, Principal.class);
             startActivity(intent);
             finish();
         } else {
-            // Hubo un problema al registrar al usuario, mostrar un mensaje de error
             Toast.makeText(this, "¡Hubo un error al registrar al usuario!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }
+

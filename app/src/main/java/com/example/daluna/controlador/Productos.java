@@ -89,7 +89,7 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
 
 
 
-        iraperfil = findViewById(R.id.perfilbotonproductos);
+//        iraperfil = findViewById(R.id.perfilbotonproductos);
         idUsuario = getIntent().getStringExtra("id");
 
         // Inicialización de Firebase
@@ -214,20 +214,7 @@ public class Productos extends AppCompatActivity implements ProductoAdaptador.On
             }
         });
 
-        iraperfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (firebaseUser != null) {
-                    Intent intent = new Intent(Productos.this, PerfilUsuario.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(Productos.this, InicioSesion.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
+
 
 //        // Configurar ValueEventListener para obtener datos de usuario y mostrar puntos
 //        if (firebaseUser != null) {

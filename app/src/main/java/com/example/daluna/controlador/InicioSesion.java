@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.daluna.Principal;
 import com.example.daluna.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +64,7 @@ public class InicioSesion extends AppCompatActivity {
         iniciosincuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InicioSesion.this, Productos.class);
+                Intent intent = new Intent(InicioSesion.this, Principal.class);
                 startActivity(intent);
                 finish();
             }
@@ -119,8 +120,7 @@ public class InicioSesion extends AppCompatActivity {
     }
 
     private void showHome(String id) {
-        Intent intent = new Intent(this, Productos.class);
-        intent.putExtra("id", id);
+        Intent intent = new Intent(this, Principal.class);
         startActivity(intent);
         finish();
     }

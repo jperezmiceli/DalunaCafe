@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.daluna.R;
 
-public class ConfirmacionPedido extends Fragment {
+public class ConfirmacionPedidoFragment extends Fragment {
 
     private String numeroPedido;
 
