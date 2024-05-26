@@ -1,5 +1,6 @@
 package com.example.daluna.controlador;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,6 +68,8 @@ public class CarritoFragment extends Fragment {
 
         DatabaseReference carritoUsuarioRef = firebaseManager.getDatabaseReferenceCarritoUsuarioActual();
 
+
+
         if (carritoUsuarioRef != null) {
             carritoUsuarioRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -115,13 +119,15 @@ public class CarritoFragment extends Fragment {
                     firebaseManager.obtenerDatosUsuarioAutenticado(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null) {
+                            if (dataSnapshot.exists()) {
                                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                                 if (usuario != null) {
-                                    // Formatear el domicilio si tiene datos
-                                    if (!usuario.getCalle().isEmpty() && !usuario.getNumeroCalle().isEmpty() && !usuario.getPueblo().isEmpty() && !usuario.getCiudad().isEmpty()) {
-                                        String domicilio =  usuario.getCalle() + " " + usuario.getNumeroCalle() +", " + usuario.getPiso() +", "  + usuario.getPueblo() + ", " + usuario.getCiudad();
-                                        // Haz lo que necesites con los datos del usuario, como mostrar el domicilio en una sola línea
+                                    if (usuario.getCalle() != null && !usuario.getCalle().isEmpty() &&
+                                            usuario.getNumeroCalle() != null && !usuario.getNumeroCalle().isEmpty() &&
+                                            usuario.getPueblo() != null && !usuario.getPueblo().isEmpty() &&
+                                            usuario.getCiudad() != null && !usuario.getCiudad().isEmpty()) {
+
+                                        String domicilio = usuario.getCalle() + " " + usuario.getNumeroCalle() + ", " + usuario.getPiso() + ", " + usuario.getPueblo() + ", " + usuario.getCiudad();
                                         Log.d("Domicilio", domicilio);
                                         String direccionEntrega = domicilio;
                                         String numeroPedido = carritoUsuarioRef.push().getKey();
@@ -129,26 +135,42 @@ public class CarritoFragment extends Fragment {
                                         Venta venta = new Venta(numeroPedido, firebaseUser.getUid(), carritoList, precioTotalCarrito, direccionEntrega);
                                         // Guardar la venta en la base de datos
                                         DatabaseReference ventasRef = FirebaseDatabase.getInstance().getReference("ventas");
+                                        DatabaseReference usuarioVentasRef = FirebaseDatabase.getInstance().getReference("usuarios").child(venta.getClienteId()).child("ventas");
                                         ventasRef.child(numeroPedido).setValue(venta);
+                                        usuarioVentasRef.child(numeroPedido).setValue(venta);
+
+                                        // Vaciar el carrito
+                                        carritoUsuarioRef.removeValue();
+
+                                        // Mostrar Toast con mensaje
+                                        Toast.makeText(getActivity(), "Pedido añadido a mis pedidos", Toast.LENGTH_SHORT).show();
+
+                                        // Iniciar el PedidosFragment
+                                        Fragment pedidosFragment = new PedidosFragment();
+                                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                                        transaction.replace(R.id.fragment_container, pedidosFragment);
+                                        transaction.addToBackStack(null);
+                                        transaction.commit();
+
                                     } else {
-                                        // El usuario no tiene datos de domicilio completos
+                                        Toast.makeText(getActivity(), "Por favor, complete su dirección en el perfil", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    // El usuario es nulo
+                                    Toast.makeText(getActivity(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                // El dataSnapshot es nulo
+                                Toast.makeText(getActivity(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // Error al obtener los datos del usuario
+                            Toast.makeText(getActivity(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
             });
+
         }
 
         return view;

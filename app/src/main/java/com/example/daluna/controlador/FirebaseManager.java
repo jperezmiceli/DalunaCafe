@@ -312,6 +312,15 @@ public class FirebaseManager {
             });
         }
     }
+
+    public void obtenerPedidos(ValueEventListener listener) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference pedidosRef = databaseReferenceUsuarios.child(currentUser.getUid()).child("ventas");
+            pedidosRef.addListenerForSingleValueEvent(listener);
+        }
+    }
+
     public void obtenerUrlsDeImagenes(String carpeta, final ObtenerUrlsCallback callback) {
         StorageReference carpetaRef = storageReference.child(carpeta);
         carpetaRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {

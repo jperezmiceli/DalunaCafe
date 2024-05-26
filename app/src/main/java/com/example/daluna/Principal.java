@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -41,6 +42,16 @@ public class Principal extends AppCompatActivity {
                 .replace(R.id.fragmentContainer, new ProductosFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Acción a realizar cuando se presiona el botón de retroceso
+                Intent intent = new Intent(Principal.this, Principal.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
         perfilbotonproductos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

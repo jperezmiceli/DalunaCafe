@@ -176,7 +176,7 @@ public class Inicio extends Fragment {
 
     private void startImageCycle() {
         final long duration = 1000;  // Duración de la animación de transición (1 segundo)
-        final long delay = 5000;     // Tiempo de espera entre cambios de imagen (5 segundos)
+        final long delay = 3000;     // Tiempo de espera entre cambios de imagen (5 segundos)
 
         handler.postDelayed(new Runnable() {
             @Override

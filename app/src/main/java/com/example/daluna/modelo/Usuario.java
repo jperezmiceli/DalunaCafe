@@ -15,6 +15,8 @@ public class Usuario {
     private String piso;
     private String pueblo;
     private String ciudad;
+    private String fotoPerfil;
+    private String imageUrl;
 
     public Usuario() {}
 
@@ -33,6 +35,8 @@ public class Usuario {
         this.piso = "";
         this.pueblo = "";
         this.ciudad = "";
+        this.fotoPerfil = "";
+        this.imageUrl = "";
     }
 
     public String getNombre() {
@@ -145,5 +149,21 @@ public class Usuario {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

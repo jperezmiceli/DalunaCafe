@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,6 +102,17 @@ public class PerfilUsuario extends AppCompatActivity {
         adapterTipoResidencia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipoResidenciaSpinner.setAdapter(adapterTipoResidencia);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Acción a realizar cuando se presiona el botón de retroceso
+                Intent intent = new Intent(PerfilUsuario.this, Principal.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
+
         // Eventos de los Spinners
         ciudadSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -175,18 +187,22 @@ public class PerfilUsuario extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(PerfilUsuario.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(PerfilUsuario.this, Principal.class));
+                                startActivity(new Intent(PerfilUsuario.this, InicioSesion.class));
                                 finish();
                             }
                         });
             }
         });
 
+
+
         // Botón atrás
         botonatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(PerfilUsuario.this, Principal.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -310,4 +326,10 @@ public class PerfilUsuario extends AppCompatActivity {
             imagenPerfil.setImageURI(imageUri);
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Opcional: puedes añadir cualquier otra acción que quieras realizar cuando el botón de retroceso sea presionado.
+    }
+
 }
