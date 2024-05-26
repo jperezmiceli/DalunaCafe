@@ -58,6 +58,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
         private ImageView imageViewAddToCart;
         private ConstraintLayout constraintLayout;
         private FirebaseManager firebaseManager = new FirebaseManager();
+
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewProducto = itemView.findViewById(R.id.imageViewProduct);
@@ -77,7 +78,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     .into(imageViewProducto);
 
             textViewNombre.setText(producto.getNombre());
-            textViewProductPrice.setText(context.getString(R.string.price_format, producto.getPrecio()));
+            textViewProductPrice.setText("Precio: " + context.getString(R.string.product_price, producto.getPrecio()));
 
             constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,7 +95,6 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                 }
             });
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,10 +103,9 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                     }
                 }
             });
-
-
         }
     }
+
     // Interfaz para manejar la acción de clic en el botón agregar al carrito
     public interface OnAddToCartClickListener {
         void onAddToCartClick(Producto producto);
@@ -116,6 +115,7 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
     public void setOnAddToCartClickListener(OnAddToCartClickListener listener) {
         this.addToCartClickListener = listener;
     }
+
     public void actualizarLista(List<Producto> nuevosProductos) {
         listaProductos.clear();
         listaProductos.addAll(nuevosProductos);

@@ -2,13 +2,17 @@ package com.example.daluna.controlador;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.daluna.Principal;
 import com.example.daluna.modelo.CarritoModelo;
 import com.example.daluna.modelo.Producto;
 import com.example.daluna.modelo.Usuario;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,18 +20,61 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseManager {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReferenceUsuarios;
     private DatabaseReference databaseReferenceProductos;
+    private StorageReference storageReference;
 
     public FirebaseManager() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReferenceUsuarios = firebaseDatabase.getReference().child("usuarios");
         databaseReferenceProductos = firebaseDatabase.getReference().child("productos");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageReference = FirebaseStorage.getInstance().getReference();
+    }
+
+    public void uploadImage(Uri imageUri, final UploadCallback callback) {
+        if (imageUri != null) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userId = user.getUid();
+                StorageReference fileReference = storageReference.child("images/" + userId + "/" + System.currentTimeMillis() + ".jpg");
+
+                fileReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                callback.onSuccess();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                callback.onFailure(e.getMessage());
+                            }
+                        });
+            } else {
+                callback.onFailure("User not logged in");
+            }
+        } else {
+            callback.onFailure("No file selected");
+        }
+    }
+
+
+    public interface UploadCallback {
+        void onSuccess();
+        void onFailure(String errorMessage);
     }
 
     public DatabaseReference getDatabaseReferenceUsuarios() {
@@ -71,6 +118,34 @@ public class FirebaseManager {
             listener.onDataChange(null);
         }
     }
+    public void obtenerDatosUsuarioAutenticado(ValueEventListener listener) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference usuarioRef = databaseReferenceUsuarios.child(userId);
+            usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                        listener.onDataChange(dataSnapshot);
+                    } else {
+                        // El usuario no existe en la base de datos
+                        listener.onDataChange(null);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    listener.onCancelled(databaseError);
+                }
+            });
+        } else {
+            // El usuario no está autenticado
+            listener.onDataChange(null);
+        }
+    }
+
 
 
     public void agregarProductoAlCarrito(Producto producto) {
@@ -137,6 +212,10 @@ public class FirebaseManager {
         }
     }
 
+
+
+
+
     public void agregarCantidadAlCarrito(String productoId) {
         DatabaseReference carritoUsuarioRef = getDatabaseReferenceCarritoUsuarioActual();
         if (carritoUsuarioRef != null) {
@@ -199,6 +278,8 @@ public class FirebaseManager {
         }
     }
 
+
+
     public void eliminarProductoDelCarrito(String productoId, Context context) {
         DatabaseReference carritoUsuarioRef = getDatabaseReferenceCarritoUsuarioActual();
         if (carritoUsuarioRef != null) {
@@ -215,7 +296,7 @@ public class FirebaseManager {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (!dataSnapshot.exists()) {
                                     // El carrito está vacío, redirigir a la actividad anterior
-                                    Intent intent = new Intent(context, Productos.class);
+                                    Intent intent = new Intent(context, Principal.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(intent);
                                 }
@@ -231,4 +312,40 @@ public class FirebaseManager {
             });
         }
     }
+    public void obtenerUrlsDeImagenes(String carpeta, final ObtenerUrlsCallback callback) {
+        StorageReference carpetaRef = storageReference.child(carpeta);
+        carpetaRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                List<String> urls = new ArrayList<>();
+                for (StorageReference item : listResult.getItems()) {
+                    item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            urls.add(uri.toString());
+                            if (urls.size() == listResult.getItems().size()) {
+                                callback.onSuccess(urls);
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callback.onFailure(e.getMessage());
+                        }
+                    });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onFailure(e.getMessage());
+            }
+        });
+    }
+
+    public interface ObtenerUrlsCallback {
+        void onSuccess(List<String> urls);
+        void onFailure(String errorMessage);
+    }
+
 }

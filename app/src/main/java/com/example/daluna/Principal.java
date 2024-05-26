@@ -60,7 +60,7 @@ public class Principal extends AppCompatActivity {
 
                     if (itemId == R.id.action_home) {
                         // Cargar el fragmento correspondiente al inicio
-                        selectedFragment = new HomeFragment();
+                        selectedFragment = new Inicio();
                     } else if (itemId == R.id.action_productos) {
                         // Cargar el fragmento correspondiente a los productos
                         selectedFragment = new ProductosFragment();

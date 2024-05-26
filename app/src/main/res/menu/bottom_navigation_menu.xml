@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_home"
-        android:title="Contacto" />
+        android:icon="@drawable/inicioicono"
+        android:title="Inicio" />
     <item
         android:id="@+id/action_productos"
+        android:icon="@drawable/productosicon"
         android:title="Productos" />
     <item
         android:id="@+id/action_pedidos"
+        android:icon="@drawable/bolsaicon"
         android:title="Pedidos" />
     <item
         android:id="@+id/action_carrito"
-        android:icon="@drawable/carrito"
+        android:icon="@drawable/iconograndecarrito"
         android:title="Carrito" />
 </menu>

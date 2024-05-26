@@ -13,7 +13,20 @@
           "package_name": "com.example.daluna"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "856313492257-6vgg8pu373iflu8pn9gdt0b4lpunslln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.daluna",
+            "certificate_hash": "78c0170efc270c26760bba4cbe6c62a8b14c18b5"
+          }
+        },
+        {
+          "client_id": "856313492257-f7vfila9n53kcl6mu3lccr42prgj0ii5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBXvRcw9XH5irxwyB1gmm-t9cWDl1pgyY4"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856313492257-f7vfila9n53kcl6mu3lccr42prgj0ii5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

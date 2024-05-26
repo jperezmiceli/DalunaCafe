@@ -33,7 +33,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="341dp"
-        android:layout_height="602dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/fondo_redondeado"
         android:orientation="vertical"
@@ -62,8 +62,7 @@
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
             android:ems="10"
-            android:hint="nombre"
-            android:inputType="textEmailAddress"
+            android:hint="Nombre"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/principal" />
@@ -78,8 +77,7 @@
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
             android:ems="10"
-            android:hint="apellidos"
-            android:inputType="textEmailAddress"
+            android:hint="Apellidos"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/principal" />
@@ -94,8 +92,8 @@
             android:layout_height="42dp"
             android:background="@drawable/fondoiniciosesion"
             android:ems="10"
-            android:hint="movil"
-            android:inputType="textEmailAddress"
+            android:hint="Móvil"
+            android:inputType="phone"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/principal" />
@@ -120,31 +118,59 @@
             android:layout_width="match_parent"
             android:layout_height="23dp" />
 
-        <EditText
-            android:id="@+id/claveUnoRegistro"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@drawable/fondoiniciosesion"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:padding="8dp"
-            android:textColorHint="@color/principal" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/claveUnoRegistro"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:background="@drawable/fondoiniciosesion"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColorHint="@color/principal" />
+
+            <ImageView
+                android:id="@+id/showPasswordButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_show_password" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="23dp" />
 
-        <EditText
-            android:id="@+id/claveDosRegistro"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@drawable/fondoiniciosesion"
-            android:ems="10"
-            android:hint="repite contraseña"
-            android:inputType="textPassword"
-            android:padding="8dp"
-            android:textColorHint="@color/principal" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/claveDosRegistro"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:background="@drawable/fondoiniciosesion"
+                android:ems="10"
+                android:hint="Repite contraseña"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColorHint="@color/principal" />
+
+            <ImageView
+                android:id="@+id/showPasswordButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_show_password" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -157,7 +183,5 @@
             android:background="@drawable/botones"
             android:text="Registrarse"
             android:textColor="@color/principaloscuro" />
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

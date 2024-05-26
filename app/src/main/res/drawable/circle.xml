@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/principaloscuromas"/> <!-- Color de fondo, puedes cambiarlo -->
+    <size
+        android:width="100dp"
+        android:height="100dp"/> <!-- Tamaño del círculo, ajusta según sea necesario -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/principalClarito2"/> <!-- Borde del círculo, ajusta según sea necesario -->
+</shape>

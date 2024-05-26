@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Daluna</string>
     <string name="price_format">Precio: $%.2f</string>
+    <string name="product_price">%s €</string>
+
     <string name="teinfusiones">Te &amp; Infusiones</string>
 
     <!-- Checkout activity -->
@@ -12,5 +14,106 @@
     <string name="payments_show_name" translatable="false">Successfully received payment data for
         %s!
     </string>
+
+    <!-- Array for ciudad Spinner -->
+    <string-array name="ciudades">
+        <item>Seleccionar ciudad</item>
+        <item>Madrid</item>
+    </string-array>
+
+    <!-- Array for pueblos de Madrid Spinner -->
+    <string-array name="pueblos_madrid">
+        <item>Seleccionar pueblo</item>
+        <item>Alcalá de Henares</item>
+        <item>Alcobendas</item>
+        <item>Alcorcón</item>
+        <item>Boadilla del Monte</item>
+        <item>Coslada</item>
+        <item>Colmenar Viejo</item>
+        <item>Collado Villalba</item>
+        <item>Getafe</item>
+        <item>Leganés</item>
+        <item>Las Rozas de Madrid</item>
+        <item>Móstoles</item>
+        <item>Navalcarnero</item>
+        <item>Fuenlabrada</item>
+        <item>Parla</item>
+        <item>Pinto</item>
+        <item>Pozuelo de Alarcón</item>
+        <item>Rivas-Vaciamadrid</item>
+        <item>San Fernando de Henares</item>
+        <item>San Sebastián de los Reyes</item>
+        <item>Torrejón de Ardoz</item>
+        <item>Tres Cantos</item>
+        <item>Valdemoro</item>
+        <item>Villanueva de la Cañada</item>
+        <item>Villanueva del Pardillo</item>
+        <item>El Escorial</item>
+        <item>Galapagar</item>
+        <item>Guadarrama</item>
+        <item>Los Molinos</item>
+        <item>San Lorenzo de El Escorial</item>
+        <item>Valdemorillo</item>
+        <item>Villaviciosa de Odón</item>
+        <item>Aranjuez</item>
+        <item>Arganda del Rey</item>
+        <item>Colmenar de Oreja</item>
+        <item>Chinchón</item>
+        <item>Ciempozuelos</item>
+        <item>San Martín de la Vega</item>
+        <item>Villa del Prado</item>
+        <item>Velilla de San Antonio</item>
+        <item>Paracuellos de Jarama</item>
+        <item>Ajalvir</item>
+        <item>Algete</item>
+        <item>Cobeña</item>
+        <item>Daganzo de Arriba</item>
+        <item>Fuente el Saz de Jarama</item>
+        <item>Fresno de Torote</item>
+        <item>Mejorada del Campo</item>
+        <item>Montejo de la Sierra</item>
+        <item>Navacerrada</item>
+        <item>Rascafría</item>
+        <item>Robledillo de la Jara</item>
+        <item>San Agustín del Guadalix</item>
+        <item>San Martín de Valdeiglesias</item>
+        <item>Sevilla la Nueva</item>
+        <item>Talamanca del Jarama</item>
+        <item>Valdilecha</item>
+        <item>Valdetorres de Jarama</item>
+        <item>Valverde de Alcalá</item>
+        <item>Buitrago del Lozoya</item>
+        <item>Cabanillas de la Sierra</item>
+        <item>Horcajuelo de la Sierra</item>
+        <item>Miraflores de la Sierra</item>
+        <item>Puentes Viejas</item>
+        <item>La Acebeda</item>
+        <item>La Cabrera</item>
+        <item>Prádena del Rincón</item>
+        <item>Rascafría</item>
+        <item>El Atazar</item>
+        <item>El Berrueco</item>
+        <item>El Boalo</item>
+        <item>La Hiruela</item>
+        <item>Patones</item>
+        <item>Pedrezuela</item>
+        <item>San Mamés</item>
+        <item>Talamanca del Jarama</item>
+        <item>La Serna del Monte</item>
+        <item>Valdemanco</item>
+        <item>Valdepiélagos</item>
+        <item>Valdilecha</item>
+        <item>Valverde de Alcalá</item>
+        <item>Villavieja del Lozoya</item>
+    </string-array>
+
+
+    <string-array name="tipo_residencia">
+        <item>Seleccionar tipo de residencia</item>
+        <item>Piso</item>
+        <item>Casa</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+
 
 </resources>

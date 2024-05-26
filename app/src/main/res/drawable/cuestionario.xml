@@ -1,0 +1,19 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo cuando el elemento está presionado -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" /> <!-- Radio para bordes redondeados -->
+            <solid android:color="@color/grisclaro" /> <!-- Color de fondo cuando se presiona -->
+            <stroke android:width="2dp" android:color="@color/white"/> <!-- Borde negro -->
+        </shape>
+    </item>
+
+    <!-- Fondo por defecto -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" /> <!-- Radio para bordes redondeados -->
+            <solid android:color="@color/principalClarito" />
+            <stroke android:width="2dp" android:color="@color/white"/> <!-- Borde negro -->
+        </shape>
+    </item>
+</selector>

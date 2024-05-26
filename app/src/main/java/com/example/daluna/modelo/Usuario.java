@@ -8,17 +8,31 @@ public class Usuario {
     private boolean estado;
     private int puntos;
     private String ubicacion;
+    private String calle;
+    private String numeroCalle;
+    private String tipoResidencia;
+    private String portal;
+    private String piso;
+    private String pueblo;
+    private String ciudad;
 
     public Usuario() {}
 
-    public Usuario(String nombre, String apellido, String numero, String correo, String ubicacion) {
+    public Usuario(String nombre, String apellido, String numero, String correo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.numero = numero;
         this.correo = correo;
         this.estado = true;
         this.puntos = 0;
-        this.ubicacion = ubicacion;
+        this.ubicacion = "";
+        this.calle = "";
+        this.numeroCalle = "";
+        this.tipoResidencia = "";
+        this.portal = "";
+        this.piso = "";
+        this.pueblo = "";
+        this.ciudad = "";
     }
 
     public String getNombre() {
@@ -29,12 +43,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
+    public String getApellido() {
         return apellido;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellido = apellidos;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getNumero() {
@@ -75,5 +89,61 @@ public class Usuario {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroCalle() {
+        return numeroCalle;
+    }
+
+    public void setNumeroCalle(String numeroCalle) {
+        this.numeroCalle = numeroCalle;
+    }
+
+    public String getTipoResidencia() {
+        return tipoResidencia;
+    }
+
+    public void setTipoResidencia(String tipoResidencia) {
+        this.tipoResidencia = tipoResidencia;
+    }
+
+    public String getPortal() {
+        return portal;
+    }
+
+    public void setPortal(String portal) {
+        this.portal = portal;
+    }
+
+    public String getPiso() {
+        return piso;
+    }
+
+    public void setPiso(String piso) {
+        this.piso = piso;
+    }
+
+    public String getPueblo() {
+        return pueblo;
+    }
+
+    public void setPueblo(String pueblo) {
+        this.pueblo = pueblo;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 }

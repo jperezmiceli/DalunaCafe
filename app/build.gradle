@@ -1,10 +1,15 @@
 plugins {
     alias(libs.plugins.androidApplication)
     id 'com.google.gms.google-services'
+    alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
 
 }
 
 android {
+    signingConfigs {
+        daluna {
+        }
+    }
     namespace 'com.example.daluna'
     compileSdk 34
 
@@ -47,12 +52,15 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-storage")
+    //maps
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
 
     // Otras dependencias
     implementation libs.glide
     implementation libs.play.services.wallet
     implementation libs.lifecycle.viewmodel.ktx
     implementation libs.lifecycle.livedata.ktx
+    implementation libs.play.services.maps
     annotationProcessor libs.compiler
     implementation libs.appcompat
     implementation libs.material
@@ -63,4 +71,6 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

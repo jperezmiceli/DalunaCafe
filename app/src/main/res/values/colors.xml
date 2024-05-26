@@ -9,5 +9,7 @@
     <color name="principalClarito">#d0c3bf</color>
     <color name="principalClarito2">#CFB3BB</color>
     <color name="principalClarito3">#B89FA6</color>
+    <color name="grisclaro">#E6E1E1</color>
+    <color name="principalmasoscuroplus">#715E63</color>
 
 </resources>
