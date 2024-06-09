@@ -50,13 +50,15 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         // Configurar el valor del ProgressBar basado en el estado del pedido
         if ("en espera".equalsIgnoreCase(venta.getEstado())) {
             holder.progressBar.setProgress(20);
-        } else if ("Aceptado".equalsIgnoreCase(venta.getEstado())) {
+        } else if ("aceptado".equalsIgnoreCase(venta.getEstado())) {
             holder.progressBar.setProgress(50);
-        } else if ("En Proceso".equalsIgnoreCase(venta.getEstado())) {
+        } else if ("pagado".equalsIgnoreCase(venta.getEstado())) {
             holder.progressBar.setProgress(70);
-        } else if ("Finalizado".equalsIgnoreCase(venta.getEstado())) {
+        } else if ("en camino".equalsIgnoreCase(venta.getEstado())) {
+            holder.progressBar.setProgress(80);
+        } else if ("entregado".equalsIgnoreCase(venta.getEstado())) {
             holder.progressBar.setProgress(100);
-        } else {
+        }else {
             holder.progressBar.setProgress(0);
         }
 
