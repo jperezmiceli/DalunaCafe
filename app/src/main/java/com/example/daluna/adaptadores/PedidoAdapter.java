@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,19 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         holder.totalVenta.setText("Total Venta: " + venta.getTotalVenta() + "€ ");
         holder.direccionEntrega.setText(venta.getDireccionEntrega() != null ? "Dirección: " + venta.getDireccionEntrega() : "Dirección no disponible");
         holder.tiempoEstimadoEntrega.setText(venta.getTiempoEstimadoEntrega() != null ? "Entrega Estimada: " + venta.getTiempoEstimadoEntrega() : "Tiempo estimado no disponible");
+
+        // Configurar el valor del ProgressBar basado en el estado del pedido
+        if ("en espera".equalsIgnoreCase(venta.getEstado())) {
+            holder.progressBar.setProgress(20);
+        } else if ("Aceptado".equalsIgnoreCase(venta.getEstado())) {
+            holder.progressBar.setProgress(50);
+        } else if ("En Proceso".equalsIgnoreCase(venta.getEstado())) {
+            holder.progressBar.setProgress(70);
+        } else if ("Finalizado".equalsIgnoreCase(venta.getEstado())) {
+            holder.progressBar.setProgress(100);
+        } else {
+            holder.progressBar.setProgress(0);
+        }
 
         // Mostrar botón y texto solo si el pedido está aceptado
         if ("Aceptado".equalsIgnoreCase(venta.getEstado())) {
@@ -109,6 +123,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
         Button expandButton, pagarBoton;
         View expandableSection;
         RecyclerView recyclerViewProductos;
+        ProgressBar progressBar;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -123,6 +138,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
             recyclerViewProductos = itemView.findViewById(R.id.recyclerViewProductos);
             textView2 = itemView.findViewById(R.id.textView2);
             pagarBoton = itemView.findViewById(R.id.pagarboton);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 }
