@@ -1,0 +1,15 @@
+<!-- res/menu/menu_pedidos.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filter_en_espera"
+        android:title="En espera" />
+    <item
+        android:id="@+id/filter_en_camino"
+        android:title="En camino" />
+    <item
+        android:id="@+id/filter_entregado"
+        android:title="Entregado" />
+    <item
+        android:id="@+id/filter_cancelado"
+        android:title="Cancelado" />
+</menu>

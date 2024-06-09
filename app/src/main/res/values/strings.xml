@@ -115,13 +115,25 @@
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
 
-    <string-array name="filter_options">
-        <item>Todos</item>
-        <item>Espera</item>
-        <item>En camino</item>
-        <item>Entregado</item>
-        <item>Cancelado</item>
-    </string-array>
+
+
+        <string-array name="estados_pedido">
+            <item>en espera</item>
+            <item>pagado</item>
+            <item>aceptado</item>
+            <item>en proceso</item>
+            <item>en camino</item>
+            <item>entregado</item>
+            <item>cancelado</item>
+        </string-array>
+        <string-array name="tiempos_espera">
+            <item>20 minutos</item>
+            <item>30 minutos</item>
+            <item>45 minutos</item>
+            <item>1 hora</item>
+        </string-array>
+
+
 
 
 </resources>

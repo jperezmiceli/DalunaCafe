@@ -1,4 +1,4 @@
-package com.example.daluna;
+package com.example.daluna.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.daluna.R;
 import com.example.daluna.controlador.FirebaseManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,7 +31,7 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Inicio extends Fragment {
+public class InicioFragment extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private int currentImageIndex = 0;
@@ -54,23 +54,12 @@ public class Inicio extends Fragment {
         auth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        imageView = view.findViewById(R.id.imageView);
+
         repositorioDeImagenes = view.findViewById(R.id.repositoriodeimagenes);
-        uploadButton = view.findViewById(R.id.uploadButton);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadFile();
-            }
-        });
+
+
 
         ImageButton whatsappButton = view.findViewById(R.id.whatsappButton);
         ImageButton emailButton = view.findViewById(R.id.emailButton);
@@ -91,7 +80,7 @@ public class Inicio extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:info@daluna.com")); // Replace with your email
+                intent.setData(Uri.parse("jperezmiceli@gmail.com")); // Replace with your email
                 startActivity(intent);
             }
         });
@@ -148,31 +137,31 @@ public class Inicio extends Fragment {
         }
     }
 
-    private void uploadFile() {
-        if (imageUri != null) {
-            FirebaseUser user = auth.getCurrentUser();
-            if (user != null) {
-                String userId = user.getUid();
-                StorageReference fileReference = storageReference.child("images/" + userId + "/" + System.currentTimeMillis() + ".jpg");
-
-                fileReference.putFile(imageUri)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Toast.makeText(getActivity(), "Upload successful", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getActivity(), "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-            }
-        } else {
-            Toast.makeText(getActivity(), "No file selected", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    private void uploadFile() {
+//        if (imageUri != null) {
+//            FirebaseUser user = auth.getCurrentUser();
+//            if (user != null) {
+//                String userId = user.getUid();
+//                StorageReference fileReference = storageReference.child("images/" + userId + "/" + System.currentTimeMillis() + ".jpg");
+//
+//                fileReference.putFile(imageUri)
+//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                Toast.makeText(getActivity(), "Upload successful", Toast.LENGTH_LONG).show();
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(getActivity(), "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+//            }
+//        } else {
+//            Toast.makeText(getActivity(), "No file selected", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void startImageCycle() {
         final long duration = 1000;  // Duración de la animación de transición (1 segundo)

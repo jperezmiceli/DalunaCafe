@@ -1,4 +1,5 @@
 package com.example.daluna.controlador;
+
 import static android.content.ContentValues.TAG;
 
 import android.content.DialogInterface;
@@ -14,12 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.daluna.modelo.Usuario;
-import com.example.daluna.Principal;
 import com.example.daluna.R;
-import com.example.daluna.controlador.RecuperacionClave;
-import com.example.daluna.controlador.Registro;
-import com.google.android.gms.auth.api.Auth;
+import com.example.daluna.modelo.Usuario;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,11 +47,14 @@ public class InicioSesion extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseManager firebaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseManager = new FirebaseManager();
 
         googlebutton = findViewById(R.id.googlebutton);
         mAuth = FirebaseAuth.getInstance();
@@ -126,7 +126,23 @@ public class InicioSesion extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.e(TAG, "Usuario registrado");
                                 firebaseUser = mAuth.getCurrentUser();
-                                showHome(mAuth.getUid());
+                                firebaseManager.esAdmin(new FirebaseManager.EsAdminCallback() {
+                                    @Override
+                                    public void onResult(boolean isAdmin) {
+                                        if (isAdmin) {
+                                            // El usuario es un administrador
+                                            // Realiza las acciones necesarias para los administradores
+                                            Intent intent = new Intent(InicioSesion.this, ConfirmacionPedidoActivity.class);
+                                            startActivity(intent);
+                                            System.out.println("El usuario es administrador.");
+                                        } else {
+                                            // El usuario no es un administrador
+                                            showHome(mAuth.getUid());
+                                            System.out.println("El usuario no es administrador.");
+                                        }
+                                    }
+                                });
+
                             } else {
                                 Log.e(TAG, "Error al iniciar sesión: " + task.getException().getMessage());
                                 showErrorDialog(task.getException().getMessage());
@@ -181,7 +197,7 @@ public class InicioSesion extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             // Crear o actualizar un usuario en la base de datos Firebase Realtime Database
                             checkAndCreateFirebaseUser(user);
-                            showHome(user.getUid());
+                            checkAdminAndProceed(user.getUid());
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -217,6 +233,22 @@ public class InicioSesion extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void checkAdminAndProceed(String userId) {
+        firebaseManager.esAdmin(new FirebaseManager.EsAdminCallback() {
+            @Override
+            public void onResult(boolean isAdmin) {
+                if (isAdmin) {
+                    Intent intent = new Intent(InicioSesion.this, ConfirmacionPedidoActivity.class);
+                    startActivity(intent);
+                    System.out.println("El usuario es administrador.");
+                } else {
+                    showHome(userId);
+                    System.out.println("El usuario no es administrador.");
+                }
+            }
+        });
     }
 
     private void showHome(String userId) {

@@ -1,4 +1,4 @@
-package com.example.daluna.controlador;
+package com.example.daluna.adaptadores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.daluna.R;
+import com.example.daluna.controlador.FirebaseManager;
 import com.example.daluna.modelo.CarritoModelo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -49,12 +49,16 @@ public class CarritoAdaptador extends RecyclerView.Adapter<CarritoAdaptador.View
         CarritoModelo carrito = mCarritoList.get(position);
         holder.txtNombreProducto.setText(carrito.getNombreProducto());
         holder.txtCantidad.setText(String.valueOf(carrito.getCantidadProducto()));
-        holder.txtPrecio.setText(String.valueOf(carrito.getPrecioTotalProducto() + " €"));
 
-        // Cargar la imagen utilizando Glide
-        Glide.with(mContext)
-                .load(carrito.getImagen())
-                .into(holder.imageViewProducto);
+        // Formatear el precio total del producto a dos decimales
+        holder.txtPrecio.setText(String.format("%.2f €", carrito.getPrecioTotalProducto()));
+
+        if (mContext != null) {
+            Glide.with(mContext)
+                    .load(carrito.getImagen())
+                    .into(holder.imageViewProducto);
+        }
+
 
         // Cargar el comentario en el EditText
         String comentario = carrito.getComentario();
@@ -100,10 +104,31 @@ public class CarritoAdaptador extends RecyclerView.Adapter<CarritoAdaptador.View
                 int adapterPosition = holder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     CarritoModelo carrito = mCarritoList.get(adapterPosition);
-                    firebaseManager.agregarCantidadAlCarrito(carrito.getProductoId());
+                    if (carrito.getCantidadProducto() >= 10) {
+                        Toast.makeText(mContext, "No es posible agregar más de 10", Toast.LENGTH_SHORT).show();
+                    } else {
+                        firebaseManager.agregarCantidadAlCarrito(carrito.getProductoId(), new FirebaseManager.CantidadAgregadaCallback() {
+                            @Override
+                            public void onSuccess(boolean cantidadAgregada) {
+                                if (cantidadAgregada) {
+                                    // Actualizar la cantidad en la lista local
+                                    carrito.setCantidadProducto(carrito.getCantidadProducto() + 1);
+                                    notifyItemChanged(adapterPosition);
+                                } else {
+                                    Toast.makeText(mContext, "Error al agregar cantidad", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                Toast.makeText(mContext, "Error al agregar cantidad: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             }
         });
+
 
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +152,7 @@ public class CarritoAdaptador extends RecyclerView.Adapter<CarritoAdaptador.View
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="@color/principal"
+    android:backgroundTint="@color/principal"
+    card_view:cardBackgroundColor="@color/principal"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/botonesclaros"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -18,32 +22,72 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Número de Pedido"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
         <TextView
             android:id="@+id/fechaVenta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha de Venta"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
         <TextView
             android:id="@+id/estado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estado"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
 
-        <!-- Botón para expandir/colapsar -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
         <Button
             android:id="@+id/expandButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/redondeadoiniciooscuro"
             android:text="Ver Más" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Realiza el pago para proceder con el envio"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <Button
+            android:id="@+id/pagarboton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/intro_texto"
+            android:text="Pagar"
+            android:visibility="gone" />
 
         <!-- Sección expandible -->
         <LinearLayout
@@ -51,32 +95,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:paddingTop="8dp">
+            android:paddingTop="8dp"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/totalVenta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Venta"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/direccionEntrega"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dirección de Entrega"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tiempoEstimadoEntrega"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tiempo Estimado de Entrega"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

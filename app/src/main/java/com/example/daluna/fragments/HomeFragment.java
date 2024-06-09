@@ -1,4 +1,4 @@
-package com.example.daluna.controlador;
+package com.example.daluna.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

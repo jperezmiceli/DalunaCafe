@@ -1,34 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Mostrar información del pedido -->
-    <TextView
-        android:id="@+id/textViewNumeroPedido"
+    <Spinner
+        android:id="@+id/filtro_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Número de Pedido: " />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/textViewFecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha: " />
-
-    <!-- Botones para seleccionar tiempo de entrega -->
-    <Button
-        android:id="@+id/buttonEntrega30Min"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="En 30 Minutos" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/filtro_spinner"
+        android:layout_above="@id/button_exit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/buttonEntrega1Hora"
+        android:id="@+id/button_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="En 1 Hora" />
-
-    <!-- Otros elementos según sea necesario -->
-
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Salir" />
+</RelativeLayout>

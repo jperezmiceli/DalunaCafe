@@ -1,4 +1,4 @@
-package com.example.daluna.controlador;
+package com.example.daluna.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.daluna.R;
+import com.example.daluna.adaptadores.PedidoAdapter;
+import com.example.daluna.controlador.FirebaseManager;
 import com.example.daluna.modelo.Venta;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -32,6 +35,7 @@ public class PedidosFragment extends Fragment {
     private List<Venta> listaPedidosFiltrada;
     private PedidoAdapter pedidoAdapter;
     private FirebaseManager firebaseManager;
+    private String[] estadosPedido;
 
     @Nullable
     @Override
@@ -52,6 +56,14 @@ public class PedidosFragment extends Fragment {
 
         firebaseManager = new FirebaseManager();
 
+        // Obtiene el array de estados desde resources
+        estadosPedido = getResources().getStringArray(R.array.estados_pedido);
+
+        // Configura el spinner con el array de estados
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, estadosPedido);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSpinner.setAdapter(adapter);
+
         // Obtiene la lista de pedidos desde Firebase
         firebaseManager.obtenerPedidos(new ValueEventListener() {
             @Override
@@ -59,16 +71,16 @@ public class PedidosFragment extends Fragment {
                 listaPedidos.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Venta venta = snapshot.getValue(Venta.class);
-                    listaPedidos.add(venta);
+                    if (venta != null) {
+                        listaPedidos.add(venta);
+                    }
                 }
-                listaPedidosFiltrada.clear();
-                listaPedidosFiltrada.addAll(listaPedidos);
-                pedidoAdapter.notifyDataSetChanged();
+                filtrarPedidos(searchField.getText().toString(), filterSpinner.getSelectedItem().toString());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejo de errores
+                Toast.makeText(getActivity(), "Error al obtener datos de Firebase", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,6 +121,7 @@ public class PedidosFragment extends Fragment {
                 listaPedidosFiltrada.add(venta);
             }
         }
-        pedidoAdapter.actualizarPedidos(listaPedidosFiltrada);
+        pedidoAdapter.notifyDataSetChanged();
     }
 }
+

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 
@@ -41,17 +42,17 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".Inicio"
+            android:name=".fragments.InicioFragment"
             android:exported="false" />
         <activity
             android:name=".Pedidos"
             android:exported="false" />
         <activity
-            android:name=".Principal"
+            android:name=".controlador.Principal"
             android:exported="false"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".controlador.ConfirmacionPedidoFragment"
+            android:name=".controlador.ConfirmacionPedidoActivity"
             android:exported="false" />
         <activity
             android:name=".CheckoutActivity"

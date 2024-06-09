@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,9 +26,18 @@
 
             <!-- TextView Cafés -->
 
-            <Space
+            <TextView
+                android:id="@+id/tituloTextViewDomicilio"
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/montserrat_extralight"
+                android:gravity="center"
+                android:text="Añade al carrito y pide a domicilio"
+                android:textAlignment="gravity"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCafe"
@@ -117,7 +127,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
-                android:text="Zumo &amp; Smuthis"
+                android:text="Zumo &amp; Smoothie"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 

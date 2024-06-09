@@ -2,6 +2,7 @@ package com.example.daluna.modelo;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class Venta {
     private String direccionEntrega;
     private String tiempoEstimadoEntrega; // Tiempo estimado de entrega
     private String estado; // Por ejemplo: pendiente, en camino, entregado, cancelado
+    private String fechaVentaEntera; // Fecha de venta en formato completo como String
+    private List<Producto> listaProductos;
 
     public Venta() {
         // Constructor vacío requerido por Firebase
@@ -29,9 +32,11 @@ public class Venta {
         this.totalVenta = totalVenta;
         this.metodoPago = "";
         this.direccionEntrega = direccionEntrega;
-        this.estado = "espera";
+        this.estado = "en espera";
         // Calculamos el tiempo estimado de entrega automáticamente
         this.tiempoEstimadoEntrega = calcularTiempoEstimadoEntrega();
+        // Calculamos la fecha de venta completa como string
+        this.fechaVentaEntera = calcularFechaVentaEntera();
     }
 
     private String calcularTiempoEstimadoEntrega() {
@@ -41,8 +46,12 @@ public class Venta {
         return "1 hora"; // Ejemplo: se establece un tiempo fijo para la demostración
     }
 
-    // Getters y setters
+    private String calcularFechaVentaEntera() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return sdf.format(this.fechaVenta);
+    }
 
+    // Getters y setters
     public String getNumeroPedido() {
         return numeroPedido;
     }
@@ -114,5 +123,20 @@ public class Venta {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-}
 
+    public String getFechaVentaEntera() {
+        return fechaVentaEntera;
+    }
+
+    public void setFechaVentaEntera(String fechaVentaEntera) {
+        this.fechaVentaEntera = fechaVentaEntera;
+    }
+
+    public List<Producto> getListaProductos() {
+        return listaProductos;
+    }
+
+    public void setListaProductos(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
+}

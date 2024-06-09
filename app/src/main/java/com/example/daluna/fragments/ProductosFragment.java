@@ -1,4 +1,4 @@
-package com.example.daluna.controlador;
+package com.example.daluna.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.daluna.R;
+import com.example.daluna.adaptadores.ProductoAdaptador;
+import com.example.daluna.controlador.FirebaseManager;
+import com.example.daluna.controlador.producto_individual;
 import com.example.daluna.modelo.Producto;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -172,13 +174,16 @@ public class ProductosFragment extends Fragment implements ProductoAdaptador.OnI
     public void onItemClick(Producto producto) {
         // Aquí puedes iniciar la nueva actividad y pasar los datos del producto
         Intent intent = new Intent(getContext(), producto_individual.class);
-        intent.putExtra("producto_imagen", producto.getImagen());
+        intent.putExtra("producto_id", producto.getId());
         intent.putExtra("producto_nombre", producto.getNombre());
-        intent.putExtra("producto_precio", producto.getPrecio());
         intent.putExtra("producto_descripcion", producto.getDescripcion());
-        // Agrega más datos si es necesario
+        intent.putExtra("producto_precio", producto.getPrecio());
+        intent.putExtra("producto_imagen", producto.getImagen());
+        intent.putExtra("producto_categoria", producto.getCategoria());
+        intent.putExtra("producto_estado", producto.isEstado());
         startActivity(intent);
     }
+
     // Supongamos que este método se llama cuando el usuario hace clic en un botón para ir al carrito
 
 

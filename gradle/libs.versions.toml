@@ -1,10 +1,13 @@
 [versions]
 agp = "8.3.0"
+androidMail = "1.6.6"
+androidMailVersion = "1.6.5"
 coreSplashscreen = "1.0.1"
 firebaseAuth = "22.3.1"
 firebaseAuthVersion = "22.0.0"
 firebaseBom = "32.8.0"
 glide = "4.12.0"
+javaxMail = "1.6.2"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -22,12 +25,16 @@ googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 playServicesMaps = "18.2.0"
 
 [libraries]
+android-activation = { module = "com.sun.mail:android-activation", version.ref = "androidMail" }
+android-mail = { module = "com.sun.mail:android-mail", version.ref = "androidMail" }
+android-mail-v165 = { module = "com.sun.mail:android-mail", version.ref = "androidMailVersion" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-auth-v2200 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+javax-mail = { module = "com.sun.mail:javax.mail", version.ref = "javaxMail" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

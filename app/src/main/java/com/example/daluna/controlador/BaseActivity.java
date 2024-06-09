@@ -1,6 +1,7 @@
 package com.example.daluna.controlador;
 
 import android.os.Bundle;
+
 import com.google.firebase.Firebase;
 
 import androidx.activity.EdgeToEdge;
@@ -8,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.example.daluna.R;
 
 public class BaseActivity extends AppCompatActivity {
-
-
 
 
     @Override

@@ -10,8 +10,11 @@ android {
         daluna {
         }
     }
+
     namespace 'com.example.daluna'
     compileSdk 34
+
+
 
     defaultConfig {
         applicationId "com.example.daluna"
@@ -36,9 +39,18 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/NOTICE.md'
+    }
 }
 
 dependencies {
+
+    
+
+
+
     // Firebase Authentication
     implementation libs.firebase.auth.v2200
     implementation platform(libs.firebase.bom)
@@ -73,6 +85,6 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    
+
 
 }

@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.daluna.Principal;
+import com.bumptech.glide.Glide;
 import com.example.daluna.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,7 +37,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 public class PerfilUsuario extends AppCompatActivity {
 
@@ -56,266 +55,314 @@ public class PerfilUsuario extends AppCompatActivity {
 
     private ArrayAdapter<CharSequence> adapterCiudades;
     private ArrayAdapter<CharSequence> adapterTipoResidencia;
+    private ArrayAdapter<CharSequence> adapterPueblos; // Adapter para el spinner de pueblos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
-        // Inicializar Firebase Auth y la base de datos
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+        try {
+            // Inicializar Firebase Auth y la base de datos
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseUser = firebaseAuth.getCurrentUser();
+            databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
 
-        // Configurar el cliente de Google SignIn
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
+            // Configurar el cliente de Google SignIn
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+            googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Referencias a los elementos de la interfaz de usuario
-        nombreEditText = findViewById(R.id.nombreEditText);
-        apellidosEditText = findViewById(R.id.apellidosEditText);
-        correoEditText = findViewById(R.id.correoEditText);
-        numeroEditText = findViewById(R.id.numeroEditText);
-        calleEditText = findViewById(R.id.calleEditText);
-        numeroCalleEditText = findViewById(R.id.numeroCalleEditText);
-        portalEditText = findViewById(R.id.portalEditText);
-        pisoEditText = findViewById(R.id.pisoEditText);
+            // Referencias a los elementos de la interfaz de usuario
+            nombreEditText = findViewById(R.id.nombreEditText);
+            apellidosEditText = findViewById(R.id.apellidosEditText);
+            correoEditText = findViewById(R.id.correoEditText);
+            numeroEditText = findViewById(R.id.numeroEditText);
+            calleEditText = findViewById(R.id.calleEditText);
+            numeroCalleEditText = findViewById(R.id.numeroCalleEditText);
+            portalEditText = findViewById(R.id.portalEditText);
+            pisoEditText = findViewById(R.id.pisoEditText);
 
-        ciudadSpinner = findViewById(R.id.ciudadSpinner);
-        puebloSpinner = findViewById(R.id.puebloSpinner);
-        tipoResidenciaSpinner = findViewById(R.id.tipoResidenciaSpinner);
+            ciudadSpinner = findViewById(R.id.ciudadSpinner);
+            puebloSpinner = findViewById(R.id.puebloSpinner);
+            tipoResidenciaSpinner = findViewById(R.id.tipoResidenciaSpinner);
 
-        guardarCambiosButton = findViewById(R.id.guardarCambiosButton);
-        buttonCerrarSesion = findViewById(R.id.cerrarSesion);
-        botonatras = findViewById(R.id.prodindatrasperfilusuario);
-        editarFotoImageView = findViewById(R.id.editarFotoImageView);
-        imagenPerfil = findViewById(R.id.fotoPerfilImageView);
+            guardarCambiosButton = findViewById(R.id.guardarCambiosButton);
+            buttonCerrarSesion = findViewById(R.id.cerrarSesion);
+            botonatras = findViewById(R.id.prodindatrasperfilusuario);
+            editarFotoImageView = findViewById(R.id.editarFotoImageView);
+            imagenPerfil = findViewById(R.id.fotoPerfilImageView);
 
-        // Configurar Spinners y sus adapters
-        adapterCiudades = ArrayAdapter.createFromResource(this, R.array.ciudades, android.R.layout.simple_spinner_item);
-        adapterCiudades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ciudadSpinner.setAdapter(adapterCiudades);
+            // Configurar Spinners y sus adapters
+            adapterCiudades = ArrayAdapter.createFromResource(this, R.array.ciudades, android.R.layout.simple_spinner_item);
+            adapterCiudades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ciudadSpinner.setAdapter(adapterCiudades);
 
-        adapterTipoResidencia = ArrayAdapter.createFromResource(this, R.array.tipo_residencia, android.R.layout.simple_spinner_item);
-        adapterTipoResidencia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tipoResidenciaSpinner.setAdapter(adapterTipoResidencia);
+            adapterTipoResidencia = ArrayAdapter.createFromResource(this, R.array.tipo_residencia, android.R.layout.simple_spinner_item);
+            adapterTipoResidencia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            tipoResidenciaSpinner.setAdapter(adapterTipoResidencia);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Acción a realizar cuando se presiona el botón de retroceso
-                Intent intent = new Intent(PerfilUsuario.this, Principal.class);
-                startActivity(intent);
-                finish();
-            }
-        };
-        this.getOnBackPressedDispatcher().addCallback(this, callback);
+            // Configurar adapter para el spinner de pueblos
+            adapterPueblos = ArrayAdapter.createFromResource(this, R.array.pueblos_madrid, android.R.layout.simple_spinner_item);
+            adapterPueblos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            puebloSpinner.setAdapter(adapterPueblos);
 
-        // Eventos de los Spinners
-        ciudadSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position == 1) { // Si la ciudad es Madrid
-                    puebloSpinner.setVisibility(View.VISIBLE);
-                } else {
-                    puebloSpinner.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing here
-            }
-        });
-
-        tipoResidenciaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (position == 1) { // Si el tipo de residencia es "Piso"
-                    portalEditText.setVisibility(View.VISIBLE);
-                    pisoEditText.setVisibility(View.VISIBLE);
-                } else {
-                    portalEditText.setVisibility(View.GONE);
-                    pisoEditText.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing here
-            }
-        });
-
-        // Obtener y mostrar la información del usuario
-        if (firebaseUser != null) {
-            cargarDatosUsuario();
-            String uid = firebaseUser.getUid();
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("imgusuarios/" + uid + ".jpg");
-            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
                 @Override
-                public void onSuccess(Uri uri) {
-                    Picasso.get().load(uri).into(imagenPerfil);
+                public void handleOnBackPressed() {
+                    try {
+                        // Acción a realizar cuando se presiona el botón de retroceso
+                        Intent intent = new Intent(PerfilUsuario.this, Principal.class);
+                        startActivity(intent);
+                        finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            this.getOnBackPressedDispatcher().addCallback(this, callback);
+
+            // Eventos de los Spinners
+            ciudadSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    if (position == 1) { // Si la ciudad es Madrid
+                        puebloSpinner.setVisibility(View.VISIBLE);
+                    } else {
+                        puebloSpinner.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // Do nothing here
                 }
             });
+
+            tipoResidenciaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    if (position == 1) { // Si el tipo de residencia es "Piso"
+                        portalEditText.setVisibility(View.VISIBLE);
+                        pisoEditText.setVisibility(View.VISIBLE);
+                    } else {
+                        portalEditText.setVisibility(View.GONE);
+                        pisoEditText.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // Do nothing here
+                }
+            });
+
+            // Obtener y mostrar la información del usuario
+            if (firebaseUser != null) {
+                cargarDatosUsuario();
+                String uid = firebaseUser.getUid();
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("imgusuarios/" + uid + ".jpg");
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Ensure the context is valid before calling Glide
+                        if (!isFinishing() && !isDestroyed()) {
+                            Glide.with(PerfilUsuario.this).load(uri).into(imagenPerfil);
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            // Guardar cambios en la información del usuario
+            guardarCambiosButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        guardarDatosUsuario();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(PerfilUsuario.this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            // Editar foto de perfil
+            editarFotoImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        seleccionarFoto();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(PerfilUsuario.this, "Error al seleccionar la foto", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            // Cerrar sesión
+            buttonCerrarSesion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        firebaseAuth.signOut();
+                        googleSignInClient.signOut().addOnCompleteListener(PerfilUsuario.this,
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(PerfilUsuario.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(PerfilUsuario.this, InicioSesion.class));
+                                        finish();
+                                    }
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(PerfilUsuario.this, "Error al cerrar sesión", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            // Botón atrás
+            botonatras.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(PerfilUsuario.this, Principal.class);
+                        startActivity(intent);
+                        finish();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Guardar cambios en la información del usuario
-        guardarCambiosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                guardarDatosUsuario();
-            }
-        });
-
-        // Editar foto de perfil
-        editarFotoImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                seleccionarFoto();
-            }
-        });
-
-        // Cerrar sesión
-        buttonCerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                googleSignInClient.signOut().addOnCompleteListener(PerfilUsuario.this,
-                        new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(PerfilUsuario.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(PerfilUsuario.this, InicioSesion.class));
-                                finish();
-                            }
-                        });
-            }
-        });
-
-
-
-        // Botón atrás
-        botonatras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PerfilUsuario.this, Principal.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     private void cargarDatosUsuario() {
-        String uid = firebaseUser.getUid();
-        databaseReference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String nombre = snapshot.child("nombre").getValue(String.class);
-                    String apellidos = snapshot.child("apellidos").getValue(String.class);
-                    String correo = snapshot.child("correo").getValue(String.class);
-                    String numero = snapshot.child("numero").getValue(String.class);
-                    String calle = snapshot.child("calle").getValue(String.class);
-                    String numeroCalle = snapshot.child("numeroCalle").getValue(String.class);
-                    String portal = snapshot.child("portal").getValue(String.class);
-                    String piso = snapshot.child("piso").getValue(String.class);
-                    String ciudad = snapshot.child("ciudad").getValue(String.class);
-                    String pueblo = snapshot.child("pueblo").getValue(String.class);
-                    String tipoResidencia = snapshot.child("tipoResidencia").getValue(String.class);
+        try {
+            String userId = firebaseUser.getUid();
+            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String nombre = snapshot.child("nombre").getValue(String.class);
+                        String apellidos = snapshot.child("apellidos").getValue(String.class);
+                        String correo = snapshot.child("correo").getValue(String.class);
+                        String numero = snapshot.child("numero").getValue(String.class);
+                        String calle = snapshot.child("calle").getValue(String.class);
+                        String numeroCalle = snapshot.child("numeroCalle").getValue(String.class);
+                        String ciudad = snapshot.child("ciudad").getValue(String.class);
+                        String pueblo = snapshot.child("pueblo").getValue(String.class); // Obtener valor de pueblo
+                        String tipoResidencia = snapshot.child("tipoResidencia").getValue(String.class);
+                        String portal = snapshot.child("portal").getValue(String.class);
+                        String piso = snapshot.child("piso").getValue(String.class);
 
-                    nombreEditText.setText(nombre);
-                    apellidosEditText.setText(apellidos);
-                    correoEditText.setText(correo);
-                    numeroEditText.setText(numero);
-                    calleEditText.setText(calle);
-                    numeroCalleEditText.setText(numeroCalle);
-                    portalEditText.setText(portal);
-                    pisoEditText.setText(piso);
+                        nombreEditText.setText(nombre);
+                        apellidosEditText.setText(apellidos);
+                        correoEditText.setText(correo);
+                        numeroEditText.setText(numero);
+                        calleEditText.setText(calle);
+                        numeroCalleEditText.setText(numeroCalle);
 
-                    if (ciudad != null) {
-                        int ciudadPosition = adapterCiudades.getPosition(ciudad);
-                        ciudadSpinner.setSelection(ciudadPosition);
-                    }
+                        // Seleccionar valor de ciudad en el Spinner
+                        if (ciudad != null) {
+                            int position = adapterCiudades.getPosition(ciudad);
+                            ciudadSpinner.setSelection(position);
+                        }
 
-                    if (ciudad != null && ciudad.equals("Madrid") && pueblo != null) {
-                        ArrayAdapter<CharSequence> adapterPueblos = ArrayAdapter.createFromResource(PerfilUsuario.this, R.array.pueblos_madrid, android.R.layout.simple_spinner_item);
-                        adapterPueblos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        puebloSpinner.setAdapter(adapterPueblos);
-                        int puebloPosition = adapterPueblos.getPosition(pueblo);
-                        puebloSpinner.setSelection(puebloPosition);
-                    }
+                        // Seleccionar valor de pueblo en el Spinner
+                        if (pueblo != null) {
+                            int position = adapterPueblos.getPosition(pueblo);
+                            puebloSpinner.setSelection(position);
+                        }
 
-                    if (tipoResidencia != null) {
-                        int tipoResidenciaPosition = adapterTipoResidencia.getPosition(tipoResidencia);
-                        tipoResidenciaSpinner.setSelection(tipoResidenciaPosition);
+                        // Seleccionar valor de tipoResidencia en el Spinner
+                        if (tipoResidencia != null) {
+                            int position = adapterTipoResidencia.getPosition(tipoResidencia);
+                            tipoResidenciaSpinner.setSelection(position);
+
+                            if (position == 1) { // Si el tipo de residencia es "Piso"
+                                portalEditText.setVisibility(View.VISIBLE);
+                                pisoEditText.setVisibility(View.VISIBLE);
+                                portalEditText.setText(portal);
+                                pisoEditText.setText(piso);
+                            } else {
+                                portalEditText.setVisibility(View.GONE);
+                                pisoEditText.setVisibility(View.GONE);
+                            }
+                        }
+
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PerfilUsuario.this, "Error al cargar los datos", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(PerfilUsuario.this, "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void guardarDatosUsuario() {
-        String uid = firebaseUser.getUid();
+        try {
+            String userId = firebaseUser.getUid();
+            String nombre = nombreEditText.getText().toString();
+            String apellidos = apellidosEditText.getText().toString();
+            String correo = correoEditText.getText().toString();
+            String numero = numeroEditText.getText().toString();
+            String calle = calleEditText.getText().toString();
+            String numeroCalle = numeroCalleEditText.getText().toString();
+            String ciudad = ciudadSpinner.getSelectedItem().toString();
+            String pueblo = puebloSpinner.getSelectedItem().toString(); // Obtener valor del Spinner de pueblo
+            String tipoResidencia = tipoResidenciaSpinner.getSelectedItem().toString();
+            String portal = portalEditText.getText().toString();
+            String piso = pisoEditText.getText().toString();
 
-        String nombre = nombreEditText.getText().toString().trim();
-        String apellidos = apellidosEditText.getText().toString().trim();
-        String correo = correoEditText.getText().toString().trim();
-        String numero = numeroEditText.getText().toString().trim();
-        String calle = calleEditText.getText().toString().trim();
-        String numeroCalle = numeroCalleEditText.getText().toString().trim();
-        String portal = portalEditText.getText().toString().trim();
-        String piso = pisoEditText.getText().toString().trim();
-        String ciudad = ciudadSpinner.getSelectedItem().toString();
-        String pueblo = ciudad.equals("Madrid") ? puebloSpinner.getSelectedItem().toString() : "";
-        String tipoResidencia = tipoResidenciaSpinner.getSelectedItem().toString();
+            // Actualizar datos en la base de datos
+            databaseReference.child(userId).child("nombre").setValue(nombre);
+            databaseReference.child(userId).child("apellidos").setValue(apellidos);
+            databaseReference.child(userId).child("correo").setValue(correo);
+            databaseReference.child(userId).child("numero").setValue(numero);
+            databaseReference.child(userId).child("calle").setValue(calle);
+            databaseReference.child(userId).child("numeroCalle").setValue(numeroCalle);
+            databaseReference.child(userId).child("ciudad").setValue(ciudad);
+            databaseReference.child(userId).child("pueblo").setValue(pueblo); // Guardar valor del Spinner de pueblo
+            databaseReference.child(userId).child("tipoResidencia").setValue(tipoResidencia);
 
-        databaseReference.child(uid).child("nombre").setValue(nombre);
-        databaseReference.child(uid).child("apellidos").setValue(apellidos);
-        databaseReference.child(uid).child("correo").setValue(correo);
-        databaseReference.child(uid).child("numero").setValue(numero);
-        databaseReference.child(uid).child("calle").setValue(calle);
-        databaseReference.child(uid).child("numeroCalle").setValue(numeroCalle);
-        databaseReference.child(uid).child("portal").setValue(portal);
-        databaseReference.child(uid).child("piso").setValue(piso);
-        databaseReference.child(uid).child("ciudad").setValue(ciudad);
-        databaseReference.child(uid).child("pueblo").setValue(pueblo);
-        databaseReference.child(uid).child("tipoResidencia").setValue(tipoResidencia);
+            if (tipoResidencia.equals("Piso")) {
+                databaseReference.child(userId).child("portal").setValue(portal);
+                databaseReference.child(userId).child("piso").setValue(piso);
+            } else {
+                databaseReference.child(userId).child("portal").removeValue();
+                databaseReference.child(userId).child("piso").removeValue();
+            }
 
-        if (imageUri != null) {
-            StorageReference fileRef = FirebaseStorage.getInstance().getReference().child("imgusuarios/" + uid + ".jpg");
-            fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            databaseReference.child(uid).child("fotoPerfil").setValue(uri.toString());
-                            Toast.makeText(PerfilUsuario.this, "Foto de perfil actualizada", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(PerfilUsuario.this, "Error al subir la foto", Toast.LENGTH_SHORT).show();
-                }
-            });
+            Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show();
         }
-
-        Toast.makeText(PerfilUsuario.this, "Datos actualizados", Toast.LENGTH_SHORT).show();
     }
 
     private void seleccionarFoto() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al seleccionar la foto", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -324,12 +371,29 @@ public class PerfilUsuario extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             imagenPerfil.setImageURI(imageUri);
+            subirFoto();
         }
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        // Opcional: puedes añadir cualquier otra acción que quieras realizar cuando el botón de retroceso sea presionado.
-    }
 
+    private void subirFoto() {
+        try {
+            String uid = firebaseUser.getUid();
+            StorageReference fileRef = FirebaseStorage.getInstance().getReference().child("imgusuarios/" + uid + ".jpg");
+            fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(PerfilUsuario.this, "Foto subida correctamente", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(PerfilUsuario.this, "Error al subir la foto", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al subir la foto", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".fragments.PedidosFragment">
 
     <EditText
         android:id="@+id/searchField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Buscar pedidos..." />
+        android:layout_margin="8dp"
+        android:hint="Buscar..." />
 
     <Spinner
         android:id="@+id/filterSpinner"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/filter_options" />
+        android:layout_below="@id/searchField"
+        android:layout_margin="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPedidos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filterSpinner"
+        android:layout_margin="8dp" />
+</RelativeLayout>

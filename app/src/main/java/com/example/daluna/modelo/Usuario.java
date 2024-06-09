@@ -5,6 +5,7 @@ public class Usuario {
     private String apellido;
     private String numero;
     private String correo;
+    private String role;
     private boolean estado;
     private int puntos;
     private String ubicacion;
@@ -37,6 +38,13 @@ public class Usuario {
         this.ciudad = "";
         this.fotoPerfil = "";
         this.imageUrl = "";
+        this.role = "user";
+    }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getNombre() {

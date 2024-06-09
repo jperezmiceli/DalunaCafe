@@ -1,6 +1,5 @@
-package com.example.daluna.controlador;
+package com.example.daluna.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.daluna.R;
+import com.example.daluna.adaptadores.CarritoAdaptador;
+import com.example.daluna.controlador.FirebaseManager;
 import com.example.daluna.modelo.CarritoModelo;
 import com.example.daluna.modelo.Usuario;
 import com.example.daluna.modelo.Venta;
@@ -67,7 +68,6 @@ public class CarritoFragment extends Fragment {
         recyclerView.setAdapter(adaptador);
 
         DatabaseReference carritoUsuarioRef = firebaseManager.getDatabaseReferenceCarritoUsuarioActual();
-
 
 
         if (carritoUsuarioRef != null) {
@@ -130,7 +130,10 @@ public class CarritoFragment extends Fragment {
                                         String domicilio = usuario.getCalle() + " " + usuario.getNumeroCalle() + ", " + usuario.getPiso() + ", " + usuario.getPueblo() + ", " + usuario.getCiudad();
                                         Log.d("Domicilio", domicilio);
                                         String direccionEntrega = domicilio;
-                                        String numeroPedido = carritoUsuarioRef.push().getKey();
+
+                                        // Generar un número de pedido de tres dígitos aleatorio
+                                        int numeroPedidoInt = (int) (Math.random() * 900) + 100;
+                                        String numeroPedido = String.valueOf(numeroPedidoInt);
 
                                         Venta venta = new Venta(numeroPedido, firebaseUser.getUid(), carritoList, precioTotalCarrito, direccionEntrega);
                                         // Guardar la venta en la base de datos
@@ -175,6 +178,7 @@ public class CarritoFragment extends Fragment {
 
         return view;
     }
+
 
     private double calcularPrecioTotal(List<CarritoModelo> carritoList) {
         double total = 0.0;

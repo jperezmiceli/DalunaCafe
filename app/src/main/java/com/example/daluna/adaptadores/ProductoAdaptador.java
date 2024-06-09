@@ -1,4 +1,4 @@
-package com.example.daluna.controlador;
+package com.example.daluna.adaptadores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.daluna.R;
+import com.example.daluna.controlador.FirebaseManager;
 import com.example.daluna.modelo.Producto;
 
 import java.util.List;
@@ -85,13 +86,31 @@ public class ProductoAdaptador extends RecyclerView.Adapter<ProductoAdaptador.Pr
                 public void onClick(View v) {
                     // Aquí puedes implementar la lógica para añadir el producto al carrito
                     // Por ejemplo, mostrar un mensaje de confirmación
-                    firebaseManager.agregarProductoAlCarrito(producto);
-                    Toast.makeText(context, "Producto " + producto.getNombre() + " añadido al carrito", Toast.LENGTH_SHORT).show();
 
-                    // Aquí se llama al método de la interfaz para comunicar la acción de agregar al carrito
-                    if (addToCartClickListener != null) {
-                        addToCartClickListener.onAddToCartClick(producto);
-                    }
+                    // Realizar la consulta a Firebase para obtener la cantidad actual del producto en el carrito
+                    firebaseManager.obtenerCantidadProductoEnCarrito(producto, new FirebaseManager.ObtenerCantidadProductoCallback() {
+                        @Override
+                        public void onSuccess(int cantidad) {
+                            if (cantidad < 10) {
+                                // Si la cantidad actual es menor que 10, permitir agregar una más al carrito
+                                firebaseManager.agregarProductoAlCarrito(producto);
+                                Toast.makeText(context, "Producto " + producto.getNombre() + " añadido al carrito", Toast.LENGTH_SHORT).show();
+
+                                // Aquí se llama al método de la interfaz para comunicar la acción de agregar al carrito
+                                if (addToCartClickListener != null) {
+                                    addToCartClickListener.onAddToCartClick(producto);
+                                }
+                            } else {
+                                // Si la cantidad actual es 10 o más, mostrar un mensaje de error
+                                Toast.makeText(context, "No es posible agregar más de 10 unidades de " + producto.getNombre() + " al carrito", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            // Manejar el error
+                        }
+                    });
                 }
             });
 
